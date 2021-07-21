@@ -1,5 +1,4 @@
 from asterism.models import BasePackage
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
@@ -22,7 +21,7 @@ class Package(BasePackage):
         (UPDATE_SENT, 'Updated transfer data sent to Aurora'),
         (ACCESSION_UPDATE_SENT, 'Updated Accession data sent to Aurora')
     )
-    accession_data = JSONField(null=True, blank=True)
+    accession_data = models.JSONField(null=True, blank=True)
 
     def __str__(self):
         return '{} {}'.format(self.type, self.bag_identifier)

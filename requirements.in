@@ -1,0 +1,13 @@
+ArchivesSnake==0.9.1
+asterism==0.7.2
+Django==3.2.5
+djangorestframework==3.12.4
+ElectronBonder==0.7.2
+health-check==3.4.1
+iso-639==0.4.5
+iso8601==0.1.14
+odin==1.7.0
+psycopg2-binary==2.9.1
+PyYAML==5.4.1
+uritemplate==3.0.1
+vcrpy==4.1.1
