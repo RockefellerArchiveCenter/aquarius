@@ -33,7 +33,7 @@ class SourceRightsStatement(odin.Resource):
     basis_note = odin.StringField(null=True)
     copyright_status = odin.StringField(null=True)
     determination_date = odin.DateField(null=True)
-    license_terms = odin.StringField(null=True)
+    terms = odin.StringField(null=True)
     statute_citation = odin.StringField(null=True)
     other_basis = odin.StringField(null=True)
     jurisdiction = odin.StringField(null=True)

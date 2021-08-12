@@ -140,7 +140,7 @@ class SourceRightsStatementToArchivesSpaceRightsStatement(odin.Mapping):
         ("end_date", None, "end_date"),
         ("copyright_status", None, "status"),
         ("determination_date", None, "determination_date"),
-        ("license_terms", None, "license_terms"),
+        ("terms", None, "license_terms"),
         ("statute_citation", None, "statute_citation"),
     )
 
