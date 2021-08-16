@@ -119,7 +119,7 @@ class SourceRightsStatementActToArchivesSpaceRightsStatementAct(odin.Mapping):
 
     mappings = (
         ("act", None, "act_type"),
-        ("restriction", None, "restriction"),
+        ("grant_restriction", None, "restriction"),
         ("start_date", None, "start_date"),
         ("end_date", None, "end_date"),
     )
@@ -138,13 +138,13 @@ class SourceRightsStatementToArchivesSpaceRightsStatement(odin.Mapping):
     mappings = (
         ("start_date", None, "start_date"),
         ("end_date", None, "end_date"),
-        ("status", None, "status"),
+        ("copyright_status", None, "status"),
         ("determination_date", None, "determination_date"),
-        ("license_terms", None, "license_terms"),
-        ("citation", None, "statute_citation"),
+        ("terms", None, "license_terms"),
+        ("statute_citation", None, "statute_citation"),
     )
 
-    @odin.map_field(from_field="other_rights_basis", to_field="other_rights_basis")
+    @odin.map_field(from_field="other_basis", to_field="other_rights_basis")
     def other_rights_basis(self, value):
         return value.lower() if value else None
 
@@ -160,7 +160,7 @@ class SourceRightsStatementToArchivesSpaceRightsStatement(odin.Mapping):
     def acts(self, value):
         return [SourceRightsStatementActToArchivesSpaceRightsStatementAct.apply(a) for a in value]
 
-    @odin.map_field(from_field="note", to_field="notes", to_list=True)
+    @odin.map_field(from_field="basis_note", to_field="notes", to_list=True)
     def notes(self, value):
         return [ArchivesSpaceNote(
                 jsonmodel_type="note_rights_statement",

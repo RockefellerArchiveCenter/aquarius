@@ -172,7 +172,13 @@ class TransferComponentRoutine(Routine):
         return data
 
     def save_transformed_object(self, transformed):
-        if not transformed.get("archivesspace_identifier"):
+        """Creates a new archival object or adds rights statements to an existing one."""
+        if transformed.get("archivesspace_identifier"):
+            component_uri = transformed["archivesspace_identifier"]
+            component = self.aspace_client.retrieve(component_uri)
+            component["rights_statements"] = transformed["rights_statements"]
+            return self.aspace_client.update(component_uri, component)
+        else:
             return self.aspace_client.create(transformed, "component").get("uri")
 
     def post_save_actions(self, package, full_data, transformed, transfer_uri):

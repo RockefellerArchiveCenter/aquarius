@@ -51,8 +51,8 @@ class TransformTest(TestCase):
         self.factory = APIRequestFactory()
         self.transfer_data = []
         self.transfer_count = 0
-        for file in sorted(listdir(join(settings.BASE_DIR, 'fixtures/data'))):
-            with open(join(settings.BASE_DIR, 'fixtures/data/{}'.format(file)), 'r') as json_file:
+        for file in sorted(listdir(join(settings.BASE_DIR, 'fixtures', 'data'))):
+            with open(join(settings.BASE_DIR, 'fixtures', 'data', file), 'r') as json_file:
                 data = json.load(json_file)
                 self.transfer_data.append(data)
                 self.transfer_count += 1
