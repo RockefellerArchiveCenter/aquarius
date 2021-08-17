@@ -163,6 +163,15 @@ class TransferComponentRoutine(Routine):
     mapping = SourceTransferToTransferComponent
 
     def get_data(self, package):
+        """Fetch package data.
+
+        If package does not come from Aurora, we need to fetch the data from
+        Ursa Major since the AccessionRoutine was skipped.
+        """
+        if package.origin in ["digitization", "legacy_digital"]:
+            archivesspace_identifier = package.data["data"]["archivesspace_identifier"]
+            package.data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
+            package.data["data"]["archivesspace_identifier"] = archivesspace_identifier
         data = package.data["data"]
         data["resource"] = package.accession_data["data"]["resource"]
         data["level"] = "file"
