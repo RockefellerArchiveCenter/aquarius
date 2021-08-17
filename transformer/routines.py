@@ -173,7 +173,7 @@ class TransferComponentRoutine(Routine):
             package.data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
             package.data["data"]["archivesspace_identifier"] = archivesspace_identifier
         data = package.data["data"]
-        data["resource"] = package.accession_data["data"]["resource"]
+        data["resource"] = package.accession_data["data"].get("resource")
         data["level"] = "file"
         data["linked_agents"] = self.get_linked_agents(
             data["metadata"]["record_creators"] + [
