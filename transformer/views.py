@@ -45,7 +45,7 @@ class PackageViewSet(ModelViewSet):
                         'archivesspace_identifier': request.data['archivesspace_uri']
                     }
                 }
-                source_object.process_status = Package.GROUPING_COMPONENT_CREATED
+                source_object.process_status = Package.TRANSFER_COMPONENT_CREATED
                 source_object.origin = request.data.get('origin')
                 source_object.save()
             return Response(prepare_response(("Package created", source_object.bag_identifier)))
