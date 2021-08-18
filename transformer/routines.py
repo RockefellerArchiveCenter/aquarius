@@ -197,9 +197,8 @@ class AuroraUpdater:
         update_ids = []
         for package in Package.objects.filter(process_status=self.start_status, origin="aurora"):
             try:
-                data = self.update_data()
-                url = getattr(package, self.url_attribute)
-                self.client.update(url, data=data)
+                data = {"process_status": self.remote_process_status}
+                self.client.update(getattr(package, self.remote_url), data=data)
                 package.process_status = self.end_status
                 package.save()
                 update_ids.append(package.bag_identifier)
@@ -213,17 +212,13 @@ class TransferUpdateRequester(AuroraUpdater):
     """Updates transfer data in Aurora."""
     start_status = Package.DIGITAL_OBJECT_CREATED
     end_status = Package.UPDATE_SENT
-    url_attribute = "aurora_transfer"
-
-    def update_data(self):
-        return {"process_status": 90}
+    remote_url = "aurora_transfer"
+    remote_process_status = 90
 
 
 class AccessionUpdateRequester(AuroraUpdater):
     """Updates accession data in Aurora."""
     start_status = Package.ACCESSION_CREATED
     end_status = Package.ACCESSION_UPDATE_SENT
-    url_attribute = "aurora_accession"
-
-    def update_data(self):
-        return {"process_status": 30}
+    remote_url = "aurora_accession"
+    remote_process_status = 30
