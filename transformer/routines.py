@@ -70,18 +70,24 @@ class Routine:
         return (message, package_ids)
 
     def get_transformed_object(self, data, from_resource, mapping):
-        from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
-        return json.loads(json_codec.dumps(mapping.apply(from_obj)))
+        try:
+            from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
+            return json.loads(json_codec.dumps(mapping.apply(from_obj)))
+        except Exception as e:
+            raise Exception("get_transformed_object Exception: {}".format(e))
 
     def get_linked_agents(self, agents):
-        linked_agents = []
-        for agent in agents:
-            agent_data = map_agents(SourceCreator(type=agent["type"], name=agent["name"]))
-            agent_ref = self.aspace_client.get_or_create(
-                agent["type"], "title", agent["name"],
-                self.start_time, json.loads(json_codec.dumps(agent_data)))
-            linked_agents.append({"uri": agent_ref})
-        return linked_agents
+        try:
+            linked_agents = []
+            for agent in agents:
+                agent_data = map_agents(SourceCreator(type=agent["type"], name=agent["name"]))
+                agent_ref = self.aspace_client.get_or_create(
+                    agent["type"], "title", agent["name"],
+                    self.start_time, json.loads(json_codec.dumps(agent_data)))
+                linked_agents.append({"uri": agent_ref})
+            return linked_agents
+        except Exception as e:
+            raise Exception("get_linked_agents Exception: {}".format(e))
 
 
 class AccessionRoutine(Routine):
@@ -136,22 +142,28 @@ class GroupingComponentRoutine(Routine):
     mapping = SourceAccessionToGroupingComponent
 
     def get_data(self, package):
-        data = package.accession_data["data"]
-        data["level"] = "recordgrp"
-        data["linked_agents"] = self.get_linked_agents(
-            data["creators"] + [
-                {"name": data["organization"], "type": "organization"}])
-        return data
+        try:
+            data = package.accession_data["data"]
+            data["level"] = "recordgrp"
+            data["linked_agents"] = self.get_linked_agents(
+                data["creators"] + [
+                    {"name": data["organization"], "type": "organization"}])
+            return data
+        except Exception as e:
+            raise Exception("get_data Exception: {}".format(e))
 
     def save_transformed_object(self, transformed):
         if not transformed.get("archivesspace_identifier"):
             return self.aspace_client.create(transformed, "component").get("uri")
 
     def post_save_actions(self, package, full_data, transformed, parent_uri):
-        for p in package.accession_data["data"]["transfers"]:
-            for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
-                sibling.data["data"]["archivesspace_parent_identifier"] = parent_uri
-                sibling.save()
+        try:
+            for p in package.accession_data["data"]["transfers"]:
+                for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
+                    sibling.data["data"]["archivesspace_parent_identifier"] = parent_uri
+                    sibling.save()
+        except Exception as e:
+            raise Exception("post_save_actions Exception: {}".format(e))
 
 
 class TransferComponentRoutine(Routine):
@@ -164,22 +176,29 @@ class TransferComponentRoutine(Routine):
     mapping = SourceTransferToTransferComponent
 
     def get_data(self, package):
-        data = package.data["data"]
-        data["resource"] = package.accession_data["data"].get("resource")
-        data["level"] = "file"
-        data["linked_agents"] = self.get_linked_agents(
-            data["metadata"]["record_creators"] + [
-                {"name": data["metadata"]["source_organization"], "type": "organization"}])
-        return data
+        try:
+            data = package.data["data"]
+            data["resource"] = package.accession_data["data"].get("resource")
+            data["level"] = "file"
+            data["linked_agents"] = self.get_linked_agents(
+                data["metadata"]["record_creators"] + [
+                    {"name": data["metadata"]["source_organization"], "type": "organization"}])
+            return data
+        except Exception as e:
+            raise Exception("get_data Exception: {}".format(e))
 
     def save_transformed_object(self, transformed):
-        return self.aspace_client.create(transformed, "component").get("uri")
+        if not transformed.get("archivesspace_identifier"):
+            return self.aspace_client.create(transformed, "component").get("uri")
 
     def post_save_actions(self, package, full_data, transformed, transfer_uri):
-        package.data["data"]["archivesspace_identifier"] = transfer_uri
-        for sibling in Package.objects.filter(bag_identifier=package.bag_identifier):
-            sibling.data["data"]["archivesspace_identifier"] = transfer_uri
-            sibling.save()
+        try:
+            package.data["data"]["archivesspace_identifier"] = transfer_uri
+            for sibling in Package.objects.filter(bag_identifier=package.bag_identifier):
+                sibling.data["data"]["archivesspace_identifier"] = transfer_uri
+                sibling.save()
+        except Exception as e:
+            raise Exception("post_save_actions Exception: {}".format(e))
 
 
 class DigitalObjectRoutine(Routine):
