@@ -14,14 +14,6 @@ from .resources.source import (SourceAccession, SourceCreator, SourcePackage,
                                SourceTransfer)
 
 
-class RoutineError(Exception):
-    pass
-
-
-class UpdateRequestError(Exception):
-    pass
-
-
 class Routine:
     """Base routine class which is inherited by all other routines.
 
@@ -50,22 +42,16 @@ class Routine:
 
     def run(self):
         package_ids = []
-
         for package in Package.objects.filter(process_status=self.start_status):
             try:
-                package.refresh_from_db()
-                initial_data = self.get_data(package)
-                transformed = self.get_transformed_object(initial_data, self.from_resource, self.mapping)
-                obj_uri = self.save_transformed_object(transformed)
-                if obj_uri:
-                    self.post_save_actions(package, initial_data, transformed, obj_uri)
+                self.transform_object(package)
                 package.process_status = self.end_status
                 package.save()
                 package_ids.append(package.bag_identifier)
             except Exception as e:
-                raise RoutineError("{} error: {}".format(self.object_type, e), package.bag_identifier)
-        message = ("{} created.".format(self.object_type) if (len(package_ids) > 0)
-                   else "{} updated.".format(self.object_type))
+                raise Exception("{} error: {}".format(self.object_type, e), package.bag_identifier)
+        message = ("{} created.".format(self.object_type) if len(package_ids)
+                   else "No {}s to process.".format(self.object_type))
         return (message, package_ids)
 
     def get_transformed_object(self, data, from_resource, mapping):
@@ -89,40 +75,27 @@ class AccessionRoutine(Routine):
     start_status = Package.SAVED
     end_status = Package.ACCESSION_CREATED
     object_type = "Accession"
-    from_resource = SourceAccession
-    mapping = SourceAccessionToArchivesSpaceAccession
 
-    def get_data(self, package):
-        package.data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-        self.discover_sibling_data(package)
-        if not package.accession_data:
-            package.accession_data = self.ursa_major_client.retrieve(package.data["accession"])
-        package.accession_data["data"]["accession_number"] = self.aspace_client.next_accession_number()
-        package.accession_data["data"]["linked_agents"] = self.get_linked_agents(
-            package.accession_data["data"]["creators"] + [
-                {"name": package.accession_data["data"]["organization"], "type": "organization"}])
-        return package.accession_data["data"]
+    def transform_object(self, package):
+        package_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
+        first_sibling = self.first_sibling(package_data["accession"])
+        if first_sibling:
+            archivesspace_accession_uri = first_sibling.archivesspace_accession
+        else:
+            data = self.ursa_major_client.retrieve(package_data["accession"]).get("data")
+            data["accession_number"] = self.aspace_client.next_accession_number()
+            data["linked_agents"] = self.get_linked_agents(
+                data["creators"] + [{"name": data["organization"], "type": "organization"}])
+            transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToArchivesSpaceAccession)
+            archivesspace_accession_uri = self.aspace_client.create(transformed, "accession").get("uri")
+        package.aurora_accession = package_data["accession"]
+        package.aurora_transfer = package_data["url"]
+        package.archivesspace_accession = archivesspace_accession_uri
 
-    def save_transformed_object(self, transformed):
-        if not transformed.get("archivesspace_identifier"):
-            return self.aspace_client.create(transformed, "accession").get("uri")
-
-    def post_save_actions(self, package, full_data, transformed, accession_uri):
-        package.accession_data["data"]["archivesspace_identifier"] = accession_uri
-        package.accession_data["data"]["accession_number"] = full_data.get("accession_number")
-        for p in package.accession_data["data"]["transfers"]:
-            for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
-                sibling.accession_data = package.accession_data
-                sibling.save()
-
-    def discover_sibling_data(self, package):
-        if Package.objects.filter(
-                data__accession=package.data["accession"], accession_data__isnull=False).exists():
-            sibling = Package.objects.filter(
-                data__accession=package.data["accession"], accession_data__isnull=False)[0]
-            package.accession_data = sibling.accession_data
-            package.data["data"]["archivesspace_parent_identifier"] = \
-                sibling.data["data"].get("archivesspace_parent_identifier")
+    def first_sibling(self, accession_identifier):
+        if Package.objects.filter(aurora_accession=accession_identifier).exists():
+            return Package.objects.filter(aurora_accession=accession_identifier).first()
+        return None
 
 
 class GroupingComponentRoutine(Routine):
@@ -131,26 +104,24 @@ class GroupingComponentRoutine(Routine):
     start_status = Package.ACCESSION_UPDATE_SENT
     end_status = Package.GROUPING_COMPONENT_CREATED
     object_type = "Grouping component"
-    from_resource = SourceAccession
-    mapping = SourceAccessionToGroupingComponent
 
-    def get_data(self, package):
-        data = package.accession_data["data"]
-        data["level"] = "recordgrp"
-        data["linked_agents"] = self.get_linked_agents(
-            data["creators"] + [
-                {"name": data["organization"], "type": "organization"}])
-        return data
+    def transform_object(self, package):
+        first_sibling = self.first_sibling(package.aurora_accession)
+        if first_sibling:
+            archivesspace_group_uri = first_sibling.archivesspace_group
+        else:
+            data = self.ursa_major_client.retrieve(package.aurora_accession).get("data")
+            data["level"] = "recordgrp"
+            data["linked_agents"] = self.get_linked_agents(
+                data["creators"] + [{"name": data["organization"], "type": "organization"}])
+            transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToGroupingComponent)
+            archivesspace_group_uri = self.aspace_client.create(transformed, "component").get("uri")
+        package.archivesspace_group = archivesspace_group_uri
 
-    def save_transformed_object(self, transformed):
-        if not transformed.get("archivesspace_identifier"):
-            return self.aspace_client.create(transformed, "component").get("uri")
-
-    def post_save_actions(self, package, full_data, transformed, parent_uri):
-        for p in package.accession_data["data"]["transfers"]:
-            for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
-                sibling.data["data"]["archivesspace_parent_identifier"] = parent_uri
-                sibling.save()
+    def first_sibling(self, accession_identifier):
+        if Package.objects.filter(aurora_accession=accession_identifier, archivesspace_group__isnull=False).exists():
+            return Package.objects.filter(aurora_accession=accession_identifier, archivesspace_group__isnull=False).first()
+        return None
 
 
 class TransferComponentRoutine(Routine):
@@ -159,42 +130,25 @@ class TransferComponentRoutine(Routine):
     start_status = Package.GROUPING_COMPONENT_CREATED
     end_status = Package.TRANSFER_COMPONENT_CREATED
     object_type = "Transfer component"
-    from_resource = SourceTransfer
-    mapping = SourceTransferToTransferComponent
 
-    def get_data(self, package):
-        """Fetch package data.
-
-        If package does not come from Aurora, we need to fetch the data from
-        Ursa Major since the AccessionRoutine was skipped.
-        """
-        if package.origin in ["digitization", "legacy_digital"]:
-            archivesspace_identifier = package.data["data"]["archivesspace_identifier"]
-            package.data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-            package.data["data"]["archivesspace_identifier"] = archivesspace_identifier
-        data = package.data["data"]
-        data["resource"] = package.accession_data["data"].get("resource")
-        data["level"] = "file"
-        data["linked_agents"] = self.get_linked_agents(
-            data["metadata"]["record_creators"] + [
-                {"name": data["metadata"]["source_organization"], "type": "organization"}])
-        return data
-
-    def save_transformed_object(self, transformed):
-        """Creates a new archival object or adds rights statements to an existing one."""
-        if transformed.get("archivesspace_identifier"):
-            component_uri = transformed["archivesspace_identifier"]
-            component = self.aspace_client.retrieve(component_uri)
-            component["rights_statements"] = transformed["rights_statements"]
-            return self.aspace_client.update(component_uri, component)
+    def transform_object(self, package):
+        first_sibling = self.first_sibling(package.aurora_accession)
+        if first_sibling:
+            archivesspace_transfer_uri = first_sibling.archivesspace_transfer
         else:
-            return self.aspace_client.create(transformed, "component").get("uri")
+            data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
+            data["resource"] = package.accession_data["data"].get("resource")
+            data["level"] = "file"
+            data["linked_agents"] = self.get_linked_agents(
+                data["metadata"]["record_creators"] + [{"name": data["metadata"]["source_organization"], "type": "organization"}])
+            transformed = self.get_transformed_object(data, SourceTransfer, SourceTransferToTransferComponent)
+            archivesspace_transfer_uri = self.aspace_client.create(transformed, "component").get("uri")
+        package.archivesspace_transfer = archivesspace_transfer_uri
 
-    def post_save_actions(self, package, full_data, transformed, transfer_uri):
-        package.data["data"]["archivesspace_identifier"] = transfer_uri
-        for sibling in Package.objects.filter(bag_identifier=package.bag_identifier):
-            sibling.data["data"]["archivesspace_identifier"] = transfer_uri
-            sibling.save()
+    def first_sibling(self, accession_identifier):
+        if Package.objects.filter(aurora_accession=accession_identifier, archivesspace_transfer__isnull=False).exists():
+            return Package.objects.filter(aurora_accession=accession_identifier, archivesspace_transfer__isnull=False).first()
+        return None
 
 
 class DigitalObjectRoutine(Routine):
@@ -241,38 +195,35 @@ class AuroraUpdater:
 
     def run(self):
         update_ids = []
-        for obj in Package.objects.filter(process_status=self.start_status, origin="aurora"):
+        for package in Package.objects.filter(process_status=self.start_status, origin="aurora"):
             try:
-                data = self.update_data(obj)
-                identifier = data["url"].rstrip("/").split("/")[-1]
-                prefix = data["url"].rstrip("/").split("/")[-2]
-                url = "/".join([prefix, "{}/".format(identifier.lstrip("/"))])
+                data = self.update_data()
+                url = getattr(package, self.url_attribute)
                 self.client.update(url, data=data)
-                obj.process_status = self.end_status
-                obj.save()
-                update_ids.append(obj.bag_identifier)
+                package.process_status = self.end_status
+                package.save()
+                update_ids.append(package.bag_identifier)
             except Exception as e:
-                raise UpdateRequestError(e)
-        return ("Update requests sent.", update_ids)
+                raise Exception(e)
+        message = "Update requests sent." if len(update_ids) else "No update requests pending"
+        return (message, update_ids)
 
 
 class TransferUpdateRequester(AuroraUpdater):
     """Updates transfer data in Aurora."""
     start_status = Package.DIGITAL_OBJECT_CREATED
     end_status = Package.UPDATE_SENT
+    url_attribute = "aurora_transfer"
 
-    def update_data(self, obj):
-        data = obj.data["data"]
-        data["process_status"] = 90
-        return data
+    def update_data(self):
+        return {"process_status": 90}
 
 
 class AccessionUpdateRequester(AuroraUpdater):
     """Updates accession data in Aurora."""
     start_status = Package.ACCESSION_CREATED
     end_status = Package.ACCESSION_UPDATE_SENT
+    url_attribute = "aurora_accession"
 
-    def update_data(self, obj):
-        data = obj.accession_data["data"]
-        data["process_status"] = 30
-        return data
+    def update_data(self):
+        return {"process_status": 30}
