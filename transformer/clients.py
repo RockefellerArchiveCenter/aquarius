@@ -148,7 +148,14 @@ class AuroraClient:
         if not self.client.authorize():
             raise AuroraClientError("Could not authorize {} in Aurora".format(username))
 
-    def update(self, url, data, **kwargs):
+    def update(self, raw_url, data, **kwargs):
+        """Sends a PUT request.
+
+        URL parsing strips the hostname off the URL so that the hostname
+        configured for AuroraClient is always used."""
+        identifier = raw_url.rstrip("/").split("/")[-1]
+        prefix = raw_url.rstrip("/").split("/")[-2]
+        url = "/".join([prefix, "{}/".format(identifier.lstrip("/"))])
         resp = self.client.put(url, data=json.dumps(data), headers={"Content-Type": "application/json"}, **kwargs)
         if resp.status_code == 200:
             return resp.json()
