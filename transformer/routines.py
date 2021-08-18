@@ -159,7 +159,7 @@ class GroupingComponentRoutine(Routine):
     def post_save_actions(self, package, full_data, transformed, parent_uri):
         try:
             for p in package.accession_data["data"]["transfers"]:
-                for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
+                for sibling in Package.objects.filter(bag_identifier=p["identifier"], data__isnull=False):
                     sibling.data["data"]["archivesspace_parent_identifier"] = parent_uri
                     sibling.save()
         except Exception as e:
@@ -194,7 +194,7 @@ class TransferComponentRoutine(Routine):
     def post_save_actions(self, package, full_data, transformed, transfer_uri):
         try:
             package.data["data"]["archivesspace_identifier"] = transfer_uri
-            for sibling in Package.objects.filter(bag_identifier=package.bag_identifier):
+            for sibling in Package.objects.filter(bag_identifier=package.bag_identifier, data__isnull=False):
                 sibling.data["data"]["archivesspace_identifier"] = transfer_uri
                 sibling.save()
         except Exception as e:
