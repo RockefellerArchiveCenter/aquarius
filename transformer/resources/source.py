@@ -18,15 +18,15 @@ class SourceLinkedCreator(odin.Resource):
 class SourceRightsStatementAct(odin.Resource):
     act = odin.StringField()
     grant_restriction = odin.StringField()
-    start_date = odin.DateField()
-    end_date = odin.DateField()
+    start_date = odin.DateField(null=True)
+    end_date = odin.DateField(null=True)
     note = odin.StringField(null=True)
 
 
 class SourceRightsStatement(odin.Resource):
     rights_basis = odin.StringField()
-    start_date = odin.DateField()
-    end_date = odin.DateField()
+    start_date = odin.DateField(null=True)
+    end_date = odin.DateField(null=True)
     rights_granted = odin.ArrayOf(SourceRightsStatementAct)
     external_documents = odin.ArrayField(null=True)
     linked_agents = odin.ArrayField(null=True)
