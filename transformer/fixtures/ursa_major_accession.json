@@ -1,0 +1,94 @@
+{
+    "url": "https://aurora.dev.rockarch.org/api/accessions/1/",
+    "data": {
+        "url": "https://aurora.dev.rockarch.org/api/accessions/241/",
+        "title": "Donor Organization, Custard Pie Appreciation Consortium, Desperate Dan Appreciation Society grant records",
+        "created": "2021-08-18T15:20:37.285446-04:00",
+        "creators": [
+            {
+                "name": "Custard Pie Appreciation Consortium",
+                "type": "organization"
+            },
+            {
+                "name": "Desperate Dan Appreciation Society",
+                "type": "organization"
+            }
+        ],
+        "end_date": "2002-06-21T00:00:00-04:00",
+        "language": "eng",
+        "resource": "/repositories/2/resources/123",
+        "transfers": [
+            {
+                "url": "https://aurora.dev.rockarch.org/api/transfers/1633/",
+                "identifier": "5920e3f4-4b9a-42d7-b49e-6fc303e76251",
+                "created_time": "2021-08-18T14:29:06.314519-04:00",
+                "modified_time": "2021-08-18T15:20:37.334841-04:00"
+            },
+            {
+                "url": "https://aurora.dev.rockarch.org/api/transfers/1635/",
+                "identifier": "10b616b4-10d6-4ca5-8b64-ac6c5f90a797",
+                "created_time": "2021-08-18T14:29:10.140164-04:00",
+                "modified_time": "2021-08-18T15:20:38.202438-04:00"
+            }
+        ],
+        "start_date": "2000-05-13T00:00:00-04:00",
+        "description": "Grant awarded to the Village Green Preservation Society for the purpose of \"preserving the old ways from being abused, protecting the new ways for me and for you\"",
+        "extent_size": 858214,
+        "extent_files": 14,
+        "organization": "Donor Organization",
+        "last_modified": "2021-08-18T15:20:37.285464-04:00",
+        "accession_date": "2021-08-18T15:20:37.285327-04:00",
+        "appraisal_note": "",
+        "process_status": 10,
+        "accession_number": null,
+        "acquisition_type": "deposit",
+        "use_restrictions": "Donor organization retains copyright",
+        "rights_statements": [
+            {
+                "terms": null,
+                "end_date": "2122-06-21",
+                "basis_note": "Donor organization retains copyright",
+                "start_date": "2000-05-13",
+                "other_basis": null,
+                "jurisdiction": "us",
+                "rights_basis": "copyright",
+                "rights_granted": [],
+                "copyright_status": "unknown",
+                "statute_citation": null,
+                "determination_date": "2021-08-11"
+            },
+            {
+                "terms": null,
+                "end_date": "2012-06-21",
+                "basis_note": "Records are available for onsite research after a 10 year embargo.",
+                "start_date": "2000-05-13",
+                "other_basis": "donor",
+                "jurisdiction": null,
+                "rights_basis": "other",
+                "rights_granted": [
+                    {
+                        "act": "publish",
+                        "note": "These can't go online",
+                        "end_date": "2002-06-21",
+                        "start_date": "2000-05-13",
+                        "grant_restriction": "disallow"
+                    },
+                    {
+                        "act": "disseminate",
+                        "note": "10 year embargo in effect",
+                        "end_date": "2012-06-21",
+                        "start_date": "2000-05-13",
+                        "grant_restriction": "disallow"
+                    }
+                ],
+                "copyright_status": null,
+                "statute_citation": null,
+                "determination_date": null
+            }
+        ],
+        "access_restrictions": "10 year embargo in effect Records are available for onsite research after a 10 year embargo. These can't go online",
+        "archivesspace_identifier": null
+    },
+    "created": "2021-08-18T19:20:59.929255Z",
+    "last_modified": "2021-08-18T19:20:59.929294Z"
+}
