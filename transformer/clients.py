@@ -147,7 +147,6 @@ class AuroraClient:
         self.client = ElectronBond(baseurl=baseurl, username=username, password=password)
         if not self.client.authorize():
             raise AuroraClientError("Could not authorize {} in Aurora".format(username))
-        print(self.client.__dict__)
 
     def update(self, raw_url, data, **kwargs):
         """Sends a PUT request.
