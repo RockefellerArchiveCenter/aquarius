@@ -24,6 +24,7 @@ class Package(BasePackage):
     aurora_accession = models.CharField(max_length=256, blank=True, null=True)
     aurora_transfer = models.CharField(max_length=256, blank=True, null=True)
     archivesspace_accession = models.CharField(max_length=256, blank=True, null=True)
+    archivesspace_resource = models.CharField(max_length=256, blank=True, null=True)
     archivesspace_group = models.CharField(max_length=256, blank=True, null=True)
     archivesspace_transfer = models.CharField(max_length=256, blank=True, null=True)
 
