@@ -99,6 +99,7 @@ class RoutinesTestCase(TestCase):
         msg, obj_list = AccessionRoutine().run()
         self.assertEqual(msg, "Accession created.")
         self.assertEqual(len(obj_list), 4)
+        as_create.assert_called_once()
         for package in Package.objects.filter(process_status=Package.ACCESSION_CREATED):
             self.assertIsNot(None, package.aurora_accession)
             self.assertEqual(package.aurora_transfer, ursa_major_transfer_url)
@@ -117,6 +118,7 @@ class RoutinesTestCase(TestCase):
         msg, obj_list = GroupingComponentRoutine().run()
         self.assertEqual(msg, "Grouping component created.")
         self.assertEqual(len(obj_list), 4)
+        as_create.assert_called_once()
         for package in Package.objects.filter(process_status=Package.GROUPING_COMPONENT_CREATED):
             self.assertEqual(package.archivesspace_group, as_group_uri)
 
@@ -133,6 +135,7 @@ class RoutinesTestCase(TestCase):
         msg, obj_list = TransferComponentRoutine().run()
         self.assertEqual(msg, "Transfer component created.")
         self.assertEqual(len(obj_list), 4)
+        as_create.assert_called_once()
         for package in Package.objects.filter(process_status=Package.TRANSFER_COMPONENT_CREATED):
             self.assertEqual(package.archivesspace_transfer, as_transfer_uri)
 
@@ -150,6 +153,7 @@ class RoutinesTestCase(TestCase):
         msg, obj_list = DigitalObjectRoutine().run()
         self.assertEqual(msg, "Digital object created.")
         self.assertEqual(len(obj_list), 12)
+        self.assertEqual(as_create_object.call_count, 12)
 
     @patch("transformer.clients.ElectronBond.authorize")
     @patch("transformer.clients.ElectronBond.patch")
