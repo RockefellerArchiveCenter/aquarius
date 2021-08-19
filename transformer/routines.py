@@ -82,8 +82,10 @@ class AccessionRoutine(Routine):
         first_sibling = self.first_sibling(package_data["accession"])
         if first_sibling:
             archivesspace_accession_uri = first_sibling.archivesspace_accession
+            archivesspace_resource_uri = first_sibling.archivesspace_resource
         else:
             data = self.ursa_major_client.retrieve(package_data["accession"]).get("data")
+            archivesspace_resource_uri = data["resource"]
             data["accession_number"] = self.aspace_client.next_accession_number()
             data["linked_agents"] = self.get_linked_agents(
                 data["creators"] + [{"name": data["organization"], "type": "organization"}])
@@ -92,6 +94,7 @@ class AccessionRoutine(Routine):
         package.aurora_accession = package_data["accession"]
         package.aurora_transfer = package_data["url"]
         package.archivesspace_accession = archivesspace_accession_uri
+        package.archivesspace_resource = archivesspace_resource_uri
 
     def first_sibling(self, accession_identifier):
         if Package.objects.filter(aurora_accession=accession_identifier).exists():
@@ -137,8 +140,8 @@ class TransferComponentRoutine(Routine):
         if first_sibling:
             archivesspace_transfer_uri = first_sibling.archivesspace_transfer
         else:
-            data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-            data["resource"] = package.accession_data["data"].get("resource")
+            data = self.ursa_major_client.find_bag_by_id(package.bag_identifier).get("data")
+            data["resource"] = package.archivesspace_resource
             data["level"] = "file"
             data["linked_agents"] = self.get_linked_agents(
                 data["metadata"]["record_creators"] + [{"name": data["metadata"]["source_organization"], "type": "organization"}])
