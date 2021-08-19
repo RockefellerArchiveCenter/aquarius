@@ -39,12 +39,7 @@ class PackageViewSet(ModelViewSet):
                 process_status=Package.SAVED
             )
             if request.data.get('origin') in ['digitization', 'legacy_digital']:
-                # TODO: investigate using defaultdict for this
-                source_object.data = {
-                    'data': {
-                        'archivesspace_identifier': request.data['archivesspace_uri']
-                    }
-                }
+                source_object.archivesspace_transfer = request.data['archivesspace_uri']
                 source_object.process_status = Package.TRANSFER_COMPONENT_CREATED
                 source_object.origin = request.data.get('origin')
                 source_object.save()

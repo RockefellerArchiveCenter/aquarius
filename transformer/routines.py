@@ -8,10 +8,11 @@ from .clients import ArchivesSpaceClient, AuroraClient, UrsaMajorClient
 from .mappings import (SourceAccessionToArchivesSpaceAccession,
                        SourceAccessionToGroupingComponent,
                        SourcePackageToDigitalObject,
+                       SourceRightsStatementToArchivesSpaceRightsStatement,
                        SourceTransferToTransferComponent, map_agents)
 from .models import Package
 from .resources.source import (SourceAccession, SourceCreator, SourcePackage,
-                               SourceTransfer)
+                               SourceRightsStatement, SourceTransfer)
 
 
 class Routine:
@@ -157,23 +158,31 @@ class DigitalObjectRoutine(Routine):
     start_status = Package.TRANSFER_COMPONENT_CREATED
     end_status = Package.DIGITAL_OBJECT_CREATED
     object_type = "Digital object"
-    from_resource = SourcePackage
-    mapping = SourcePackageToDigitalObject
 
-    def get_data(self, package):
-        return {"fedora_uri": package.fedora_uri, "use_statement": package.use_statement}
+    def transform_object(self, package):
+        data = {"fedora_uri": package.fedora_uri, "use_statement": package.use_statement}
+        transformed = self.get_transformed_object(data, SourcePackage, SourcePackageToDigitalObject)
+        do_uri = self.aspace_client.create(transformed, "digital object").get("uri")
+        self.update_archival_object(package, do_uri)
 
-    def save_transformed_object(self, transformed):
-        return self.aspace_client.create(transformed, "digital object").get("uri")
+    def update_archival_object(self, package, do_uri):
+        """Adds additional data to the archival object to which the digital object is attached.
 
-    def post_save_actions(self, package, full_data, transformed, do_uri):
-        transfer_component = self.aspace_client.retrieve(package.data["data"]["archivesspace_identifier"])
+        If no rights statements are already assigned to the archival object, transforms
+        and adds rights statements. Adds the newly created digital objects to the
+        archival object's instances array.
+        """
+        transfer_component = self.aspace_client.retrieve(package.archivesspace_transfer)
+        if not len(transfer_component.get("rights_statements")) and package.origin in ["digitization", "legacy_digital"]:
+            rights_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)["data"].get("rights_statements")
+            transformed_rights = self.get_transformed_object(
+                rights_data, SourceRightsStatement, SourceRightsStatementToArchivesSpaceRightsStatement)
+            transfer_component["rights_statements"] = transformed_rights
         transfer_component["instances"].append(
             {"instance_type": "digital_object",
              "jsonmodel_type": "instance",
-             "digital_object": {"ref": do_uri}
-             })
-        self.aspace_client.update(package.data["data"]["archivesspace_identifier"], transfer_component)
+             "digital_object": {"ref": do_uri}})
+        self.aspace_client.update(package.archivesspace_transfer, transfer_component)
 
 
 class AuroraUpdater:
