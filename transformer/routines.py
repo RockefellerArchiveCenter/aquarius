@@ -31,10 +31,7 @@ class Routine:
     """
 
     def __init__(self):
-        self.aspace_client = ArchivesSpaceClient(settings.ARCHIVESSPACE["baseurl"],
-                                                 settings.ARCHIVESSPACE["username"],
-                                                 settings.ARCHIVESSPACE["password"],
-                                                 settings.ARCHIVESSPACE["repo_id"])
+        self.aspace_client = ArchivesSpaceClient(**settings.ARCHIVESSPACE)
         self.ursa_major_client = UrsaMajorClient(settings.URSA_MAJOR["baseurl"])
         self.start_time = int(time.time())
 
@@ -214,9 +211,7 @@ class AuroraUpdater:
     """
 
     def __init__(self):
-        self.client = AuroraClient(baseurl=settings.AURORA["baseurl"],
-                                   username=settings.AURORA["username"],
-                                   password=settings.AURORA["password"])
+        self.client = AuroraClient(**settings.AURORA)
 
     def run(self):
         update_ids = []
