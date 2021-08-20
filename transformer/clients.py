@@ -135,7 +135,7 @@ class UrsaMajorClient(object):
             if count != 1:
                 raise UrsaMajorClientError("Found {} bags matching id {}, expected 1".format(count, identifier))
             bag_url = bag_resp.get("results")[0]["url"]
-            return self.send_request("get", bag_url)
+            return self.retrieve(bag_url)
         except Exception as e:
             raise UrsaMajorClientError("Error finding bag by id: {}".format(e))
 

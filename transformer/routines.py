@@ -8,10 +8,11 @@ from .clients import ArchivesSpaceClient, AuroraClient, UrsaMajorClient
 from .mappings import (SourceAccessionToArchivesSpaceAccession,
                        SourceAccessionToGroupingComponent,
                        SourcePackageToDigitalObject,
+                       SourceRightsStatementToArchivesSpaceRightsStatement,
                        SourceTransferToTransferComponent, map_agents)
 from .models import Package
 from .resources.source import (SourceAccession, SourceCreator, SourcePackage,
-                               SourceTransfer)
+                               SourceRightsStatement, SourceTransfer)
 
 
 class RoutineError(Exception):
@@ -69,18 +70,24 @@ class Routine:
         return (message, package_ids)
 
     def get_transformed_object(self, data, from_resource, mapping):
-        from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
-        return json.loads(json_codec.dumps(mapping.apply(from_obj)))
+        try:
+            from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
+            return json.loads(json_codec.dumps(mapping.apply(from_obj)))
+        except Exception as e:
+            raise Exception("get_transformed_object Exception: {}".format(e))
 
     def get_linked_agents(self, agents):
-        linked_agents = []
-        for agent in agents:
-            agent_data = map_agents(SourceCreator(type=agent["type"], name=agent["name"]))
-            agent_ref = self.aspace_client.get_or_create(
-                agent["type"], "title", agent["name"],
-                self.start_time, json.loads(json_codec.dumps(agent_data)))
-            linked_agents.append({"uri": agent_ref})
-        return linked_agents
+        try:
+            linked_agents = []
+            for agent in agents:
+                agent_data = map_agents(SourceCreator(type=agent["type"], name=agent["name"]))
+                agent_ref = self.aspace_client.get_or_create(
+                    agent["type"], "title", agent["name"],
+                    self.start_time, json.loads(json_codec.dumps(agent_data)))
+                linked_agents.append({"uri": agent_ref})
+            return linked_agents
+        except Exception as e:
+            raise Exception("get_linked_agents Exception: {}".format(e))
 
 
 class AccessionRoutine(Routine):
@@ -148,7 +155,7 @@ class GroupingComponentRoutine(Routine):
 
     def post_save_actions(self, package, full_data, transformed, parent_uri):
         for p in package.accession_data["data"]["transfers"]:
-            for sibling in Package.objects.filter(bag_identifier=p["identifier"]):
+            for sibling in Package.objects.filter(bag_identifier=p["identifier"], data__isnull=False):
                 sibling.data["data"]["archivesspace_parent_identifier"] = parent_uri
                 sibling.save()
 
@@ -163,15 +170,6 @@ class TransferComponentRoutine(Routine):
     mapping = SourceTransferToTransferComponent
 
     def get_data(self, package):
-        """Fetch package data.
-
-        If package does not come from Aurora, we need to fetch the data from
-        Ursa Major since the AccessionRoutine was skipped.
-        """
-        if package.origin in ["digitization", "legacy_digital"]:
-            archivesspace_identifier = package.data["data"]["archivesspace_identifier"]
-            package.data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-            package.data["data"]["archivesspace_identifier"] = archivesspace_identifier
         data = package.data["data"]
         data["resource"] = package.accession_data["data"].get("resource")
         data["level"] = "file"
@@ -181,18 +179,12 @@ class TransferComponentRoutine(Routine):
         return data
 
     def save_transformed_object(self, transformed):
-        """Creates a new archival object or adds rights statements to an existing one."""
-        if transformed.get("archivesspace_identifier"):
-            component_uri = transformed["archivesspace_identifier"]
-            component = self.aspace_client.retrieve(component_uri)
-            component["rights_statements"] = transformed["rights_statements"]
-            return self.aspace_client.update(component_uri, component)
-        else:
+        if not transformed.get("archivesspace_identifier"):
             return self.aspace_client.create(transformed, "component").get("uri")
 
     def post_save_actions(self, package, full_data, transformed, transfer_uri):
         package.data["data"]["archivesspace_identifier"] = transfer_uri
-        for sibling in Package.objects.filter(bag_identifier=package.bag_identifier):
+        for sibling in Package.objects.filter(bag_identifier=package.bag_identifier, data__isnull=False):
             sibling.data["data"]["archivesspace_identifier"] = transfer_uri
             sibling.save()
 
@@ -213,12 +205,22 @@ class DigitalObjectRoutine(Routine):
         return self.aspace_client.create(transformed, "digital object").get("uri")
 
     def post_save_actions(self, package, full_data, transformed, do_uri):
+        """Adds additional data to the archival object to which the digital object is attached.
+
+        If no rights statements are already assigned to the archival object, transforms
+        and adds rights statements. Adds the newly created digital objects to the
+        archival object's instances array.
+        """
         transfer_component = self.aspace_client.retrieve(package.data["data"]["archivesspace_identifier"])
+        if not len(transfer_component.get("rights_statements")) and package.origin in ["digitization", "legacy_digital"]:
+            rights_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)["data"].get("rights_statements")
+            transformed_rights = self.get_transformed_object(
+                rights_data, SourceRightsStatement, SourceRightsStatementToArchivesSpaceRightsStatement)
+            transfer_component["rights_statements"] = transformed_rights
         transfer_component["instances"].append(
             {"instance_type": "digital_object",
              "jsonmodel_type": "instance",
-             "digital_object": {"ref": do_uri}
-             })
+             "digital_object": {"ref": do_uri}})
         self.aspace_client.update(package.data["data"]["archivesspace_identifier"], transfer_component)
 
 
