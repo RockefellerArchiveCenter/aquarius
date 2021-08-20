@@ -21,16 +21,13 @@ class Routine:
     Provides default clients for ArchivesSpace and Ursa Major, and instantiates
     a DataTransformer class.
 
-    The `apply_transformations` method in the `run` function is intended to be
+    The `transform_object` method in the `run` function is intended to be
     overriden by routines which interact with specific types of objects.
     Requires the following variables to be overriden as well:
         start_status - the status of the objects to be acted on.
         end_status - the status to be applied to Package objects once the
                         routine has completed successfully.
         object_type - a string containing the object type of the routine.
-        from_resource - an odin.Resource which represents source data.
-        mapping - an odin.Mapping which mapps the from_resource to the desired
-                    output.
     """
 
     def __init__(self):
@@ -55,6 +52,9 @@ class Routine:
                    else "No {}s to process.".format(self.object_type))
         return (message, package_ids)
 
+    def transform_object(self, package):
+        raise NotImplementedError("You must implement a `transform_object` method")
+
     def get_transformed_object(self, data, from_resource, mapping):
         from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
         return json.loads(json_codec.dumps(mapping.apply(from_obj)))
@@ -71,13 +71,17 @@ class Routine:
 
 
 class AccessionRoutine(Routine):
-    """Transforms and saves accession data."""
+    """Creates an ArchivesSpace accession."""
 
     start_status = Package.SAVED
     end_status = Package.ACCESSION_CREATED
     object_type = "Accession"
 
     def transform_object(self, package):
+        """Creates an accession for the first processed package in an accession.
+        Other packages in the accession are linked to the existing accession
+        information.
+        """
         package_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
         first_sibling = self.first_sibling(package_data["accession"])
         if first_sibling:
@@ -103,13 +107,17 @@ class AccessionRoutine(Routine):
 
 
 class GroupingComponentRoutine(Routine):
-    """Transforms and saves grouping component data."""
+    """Creates an ArchivesSpace archival object for a group of transfers."""
 
     start_status = Package.ACCESSION_UPDATE_SENT
     end_status = Package.GROUPING_COMPONENT_CREATED
     object_type = "Grouping component"
 
     def transform_object(self, package):
+        """Creates an archival object for the first processed package in an
+        accession. Other packages are linked to the existing archival object
+        information.
+        """
         first_sibling = self.first_sibling(package.aurora_accession)
         if first_sibling:
             archivesspace_group_uri = first_sibling.archivesspace_group
@@ -129,13 +137,16 @@ class GroupingComponentRoutine(Routine):
 
 
 class TransferComponentRoutine(Routine):
-    """Transforms and saves transfer component data."""
+    """Creates an ArchivesSpace archival object for the transfer."""
 
     start_status = Package.GROUPING_COMPONENT_CREATED
     end_status = Package.TRANSFER_COMPONENT_CREATED
     object_type = "Transfer component"
 
     def transform_object(self, package):
+        """Creates an archival object for the first package in a transfer. Other
+        packages in the transfer are linked to existing archival object information.
+        """
         first_sibling = self.first_sibling(package.aurora_accession)
         if first_sibling:
             archivesspace_transfer_uri = first_sibling.archivesspace_transfer
@@ -156,13 +167,14 @@ class TransferComponentRoutine(Routine):
 
 
 class DigitalObjectRoutine(Routine):
-    """Transforms and saves digital object data."""
+    """Creates an ArchivesSpace digital object and links it to an archival object."""
 
     start_status = Package.TRANSFER_COMPONENT_CREATED
     end_status = Package.DIGITAL_OBJECT_CREATED
     object_type = "Digital object"
 
     def transform_object(self, package):
+        """Creates a digital object for each package."""
         data = {"fedora_uri": package.fedora_uri, "use_statement": package.use_statement}
         transformed = self.get_transformed_object(data, SourcePackage, SourcePackageToDigitalObject)
         do_uri = self.aspace_client.create(transformed, "digital object").get("uri")
@@ -193,11 +205,15 @@ class AuroraUpdater:
 
     Provides a web client and a `run` method.
 
-    To use this class, override the `update_data` method. This method specifies
-    the data object to be delivered to Aurora, as well as any changes to that
-    object. Classes inheriting this class should also specify a `start_status`
-    and an `end_status`, which determine the queryset of objects acted on and
-    the status to which those objects are updated, respectively.
+    Subclasses inheriting this class should specify the following attributes:
+        `start_status` - indicating the process_status for the beginning
+                         queryset of objects.
+        `end_status` - indicating the process_status that will be saved for all
+                       objects in the initial queryset.
+        `remote_url` - a string representing an attribute on a `Package` instance
+                       which stores the URL to send the PATCH request to.
+        `remote_process_status` - an integeter representation of the process
+                                  status to send to the remote URL.
     """
 
     def __init__(self):
