@@ -365,9 +365,10 @@
 			"last_modified": "2021-08-19T16:16:04.987Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/5ffaa3de-6bc2-437d-9c40-078b3144ccdd",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": null,
 			"archivesspace_transfer": null
 		}
@@ -385,9 +386,10 @@
 			"last_modified": "2021-08-19T16:16:05.013Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/30842710-2112-4506-839a-7009b22f5ef5",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": null,
 			"archivesspace_transfer": null
 		}
@@ -406,9 +408,10 @@
 			"last_modified": "2021-08-19T16:16:05.032Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/84767737-2903-425d-a2f5-8db9b049fd64",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": null,
 			"archivesspace_transfer": null
 		}
@@ -427,9 +430,10 @@
 			"last_modified": "2021-08-19T16:16:05.054Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/237c875d-9072-4495-9875-9e1837dab2a8",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": null,
 			"archivesspace_transfer": null
 		}
@@ -448,9 +452,10 @@
 			"last_modified": "2021-08-19T16:16:05.071Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/732490ba-fe09-4863-b1fa-fbe79ea32d0e",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": null
 		}
@@ -469,9 +474,10 @@
 			"last_modified": "2021-08-19T16:16:05.091Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/7cec83eb-244b-4ffc-b637-2a2d39c761e3",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": null
 		}
@@ -490,9 +496,10 @@
 			"last_modified": "2021-08-19T16:16:05.113Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/3beb38ad-80c1-4b7d-953b-81a8f1bbb0f6",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": null
 		}
@@ -511,9 +518,10 @@
 			"last_modified": "2021-08-19T16:16:05.134Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/11b05263-ef91-4589-b980-85f95ecd1887",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/2/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": null
 		}
@@ -522,7 +530,7 @@
 		"model": "transformer.package",
 		"pk": 13,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -532,9 +540,10 @@
 			"last_modified": "2021-08-19T16:16:05.156Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/20399337-c340-417a-bd67-3e9e9010f060",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/3/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -543,7 +552,7 @@
 		"model": "transformer.package",
 		"pk": 14,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -553,9 +562,10 @@
 			"last_modified": "2021-08-19T16:16:05.174Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/b574f47b-7018-4bf7-962a-8c8bce817e0b",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/3/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -564,7 +574,7 @@
 		"model": "transformer.package",
 		"pk": 15,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -574,9 +584,10 @@
 			"last_modified": "2021-08-19T16:16:05.193Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/753425a8-492b-482c-83dc-7e5db1dd632f",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/3/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -585,7 +596,7 @@
 		"model": "transformer.package",
 		"pk": 16,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -595,9 +606,10 @@
 			"last_modified": "2021-08-19T16:16:05.213Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/5ee32663-7371-4589-a9f7-d66135983cc2",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/3/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -606,7 +618,7 @@
 		"model": "transformer.package",
 		"pk": 17,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -616,9 +628,10 @@
 			"last_modified": "2021-08-19T16:16:05.232Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/a18fdabf-be5f-49a3-a814-4b812d5140d5",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/3/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -627,7 +640,7 @@
 		"model": "transformer.package",
 		"pk": 18,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -637,9 +650,10 @@
 			"last_modified": "2021-08-19T16:16:05.250Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/e6421665-e5ec-498a-9505-0e51c6a9e4a3",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/4/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -648,7 +662,7 @@
 		"model": "transformer.package",
 		"pk": 19,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -658,9 +672,10 @@
 			"last_modified": "2021-08-19T16:16:05.274Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/0b626fe8-52c0-4b73-b243-b33f2c552f35",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/4/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -669,7 +684,7 @@
 		"model": "transformer.package",
 		"pk": 20,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -679,9 +694,10 @@
 			"last_modified": "2021-08-19T16:16:05.293Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/30e3746a-d049-4d02-87f5-e09073cc12ca",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/4/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -690,7 +706,7 @@
 		"model": "transformer.package",
 		"pk": 21,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -700,9 +716,10 @@
 			"last_modified": "2021-08-19T16:16:05.315Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/7a999d0e-7fc3-40ae-9281-53554e451da6",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/4/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -711,7 +728,7 @@
 		"model": "transformer.package",
 		"pk": 22,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -721,9 +738,10 @@
 			"last_modified": "2021-08-19T16:16:05.332Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/d990131c-2bca-45f2-99fc-02f1a0134eab",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/5/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -732,7 +750,7 @@
 		"model": "transformer.package",
 		"pk": 23,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "aurora",
@@ -742,9 +760,10 @@
 			"last_modified": "2021-08-19T16:16:05.353Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/4746948e-8a86-4703-bc3a-2b8239ba2383",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/5/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -753,7 +772,7 @@
 		"model": "transformer.package",
 		"pk": 24,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "aurora",
@@ -763,9 +782,10 @@
 			"last_modified": "2021-08-19T16:16:05.378Z",
 			"fedora_uri": "http://fedora.dev.rockarch.org:8080/fedora/rest/39f92e13-53e9-4bd5-a3b5-231b4207e572",
 			"aurora_accession": "https://aurora.dev.rockarch.org/api/accessions/5/",
-			"aurora_transfer": "https://aurora.dev.rockarch.org/api/transfers/1511/",
+			"aurora_transfer": "/api/transfers/1635/",
 			"archivesspace_accession": "/repositories/2/accessions/123",
 			"archivesspace_resource": "/repositories/2/resources/1",
+			"ursa_major_accession": "http://10.0.1.90:8005/accessions/111/",
 			"archivesspace_group": "/repositories/2/archival_objects/123",
 			"archivesspace_transfer": "/repositories/2/archival_objects/1234"
 		}
@@ -774,7 +794,7 @@
 		"model": "transformer.package",
 		"pk": 25,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "digitization",
@@ -794,7 +814,7 @@
 		"model": "transformer.package",
 		"pk": 26,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "digitization",
@@ -814,7 +834,7 @@
 		"model": "transformer.package",
 		"pk": 27,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "digitization",
@@ -834,7 +854,7 @@
 		"model": "transformer.package",
 		"pk": 28,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "digitization",
@@ -854,7 +874,7 @@
 		"model": "transformer.package",
 		"pk": 29,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "legacy_digital",
@@ -874,7 +894,7 @@
 		"model": "transformer.package",
 		"pk": 30,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "legacy_digital",
@@ -894,7 +914,7 @@
 		"model": "transformer.package",
 		"pk": 31,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "aip",
 			"origin": "legacy_digital",
@@ -914,7 +934,7 @@
 		"model": "transformer.package",
 		"pk": 32,
 		"fields": {
-			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+			"bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5c",
 			"bag_path": null,
 			"type": "dip",
 			"origin": "legacy_digital",
@@ -933,7 +953,7 @@
 	  "model": "transformer.package",
 	  "pk": 33,
 	  "fields": {
-	    "bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5b",
+	    "bag_identifier": "69ef97fe-c837-418a-9c3c-7246a4a36e5",
 	    "bag_path": null,
 	    "type": "dip",
 	    "origin": "aurora",

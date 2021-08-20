@@ -89,7 +89,7 @@ class AccessionRoutine(Routine):
         """
         package_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
         ursa_major_accession = package_data["accession"]
-        first_sibling = self.first_sibling({"aurora_accession": ursa_major_accession})
+        first_sibling = self.first_sibling({"ursa_major_accession": ursa_major_accession})
         if first_sibling:
             archivesspace_accession_uri = first_sibling.archivesspace_accession
             archivesspace_resource_uri = first_sibling.archivesspace_resource

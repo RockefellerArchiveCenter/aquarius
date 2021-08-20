@@ -87,10 +87,9 @@ class RoutinesTestCase(TestCase):
     @patch("transformer.clients.ArchivesSpaceClient.create")
     @patch("transformer.clients.ArchivesSpaceClient.get_or_create")
     def test_process_accessions(self, as_get_or_create, as_create, as_accession_number, as_auth, ursa_accession, ursa_bag):
-        ursa_major_accession_url = self.ursa_major_accession["url"]
-        ursa_major_transfer_url = "https://aurora.dev.rockarch.org/api/transfers/1511/"
+        ursa_major_transfer_url = "/api/transfers/1635/"
         as_accession_uri = "/repositories/2/accessions/123"
-        ursa_bag.return_value = {"accession": ursa_major_accession_url, "url": ursa_major_transfer_url}
+        ursa_bag.return_value = self.ursa_major_bag
         ursa_accession.return_value = self.ursa_major_accession
         as_auth.return_value = True
         as_accession_number.return_value = "2020:001"
@@ -101,7 +100,8 @@ class RoutinesTestCase(TestCase):
         self.assertEqual(len(obj_list), 4)
         as_create.assert_called_once()
         for package in Package.objects.filter(process_status=Package.ACCESSION_CREATED):
-            self.assertIsNot(None, package.aurora_accession)
+            self.assertIsNot(None, package.ursa_major_accession)
+            self.assertEqual(package.aurora_accession, self.ursa_major_accession["data"]["url"])
             self.assertEqual(package.aurora_transfer, ursa_major_transfer_url)
             self.assertIsNot(package.archivesspace_accession, as_accession_uri)
 
