@@ -155,7 +155,7 @@ class AuroraClient:
         configured for AuroraClient is always used."""
         identifier = raw_url.rstrip("/").split("/")[-1]
         prefix = raw_url.rstrip("/").split("/")[-2]
-        url = "/".join([prefix, "{}/".format(identifier.lstrip("/"))])
+        url = "/{}/{}/".format(prefix.lstrip("/"), identifier.lstrip("/"))
         resp = self.client.patch(url, data=json.dumps(data), headers={"Content-Type": "application/json"}, **kwargs)
         if resp.status_code == 200:
             return resp.json()
