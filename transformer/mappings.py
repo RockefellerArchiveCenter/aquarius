@@ -124,7 +124,7 @@ class SourceRightsStatementActToArchivesSpaceRightsStatementAct(odin.Mapping):
         ("end_date", None, "end_date"),
     )
 
-    @odin.map_field(from_field="note", to_field="notes", to_list=True)
+    @odin.map_field(from_field="granted_note", to_field="notes", to_list=True)
     def notes(self, value):
         return [ArchivesSpaceNote(
             jsonmodel_type="note_rights_statement_act",

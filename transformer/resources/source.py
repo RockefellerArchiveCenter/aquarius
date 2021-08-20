@@ -20,7 +20,7 @@ class SourceRightsStatementAct(odin.Resource):
     grant_restriction = odin.StringField()
     start_date = odin.DateField(null=True)
     end_date = odin.DateField(null=True)
-    note = odin.StringField(null=True)
+    granted_note = odin.StringField(null=True)
 
 
 class SourceRightsStatement(odin.Resource):
