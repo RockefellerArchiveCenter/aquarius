@@ -155,6 +155,7 @@ class TransferComponentRoutine(Routine):
             archivesspace_transfer_uri = first_sibling.archivesspace_transfer
         else:
             data = self.ursa_major_client.find_bag_by_id(package.bag_identifier).get("data")
+            data["parent"] = package.archivesspace_group
             data["resource"] = package.archivesspace_resource
             data["level"] = "file"
             data["linked_agents"] = self.get_linked_agents(

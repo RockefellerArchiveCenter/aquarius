@@ -78,7 +78,7 @@ class SourceTransfer(odin.Resource):
     url = odin.StringField()
     rights_statements = odin.ArrayOf(SourceRightsStatement)
     resource = odin.StringField()
-    archivesspace_parent_identifier = odin.StringField(null=True)
+    parent = odin.StringField(null=True)
     linked_agents = odin.ArrayOf(SourceLinkedCreator, null=True)
     level = odin.StringField()
 

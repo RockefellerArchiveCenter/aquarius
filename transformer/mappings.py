@@ -302,7 +302,7 @@ class SourceTransferToTransferComponent(odin.Mapping):
             data.append(map_note_multipart(value.internal_sender_description, "scopecontent"))
         return data
 
-    @odin.map_field(from_field="archivesspace_parent_identifier", to_field="parent")
+    @odin.map_field(from_field="parent", to_field="parent")
     def parent(self, value):
         if value:
             return ArchivesSpaceRef(ref=value)
