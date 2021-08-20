@@ -149,7 +149,7 @@ class AuroraClient:
             raise AuroraClientError("Could not authorize {} in Aurora".format(username))
 
     def update(self, raw_url, data, **kwargs):
-        """Sends a PUT request.
+        """Sends a PATCH request.
 
         URL parsing strips the hostname off the URL so that the hostname
         configured for AuroraClient is always used."""
