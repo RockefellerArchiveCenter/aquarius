@@ -149,7 +149,7 @@ class TransferComponentRoutine(Routine):
         packages in the transfer are linked to existing archival object information.
         """
         first_sibling = self.first_sibling({
-            "aurora_accession": package.aurora_accession,
+            "bag_identifier": package.bag_identifier,
             "archivesspace_transfer__isnull": False})
         if first_sibling:
             archivesspace_transfer_uri = first_sibling.archivesspace_transfer
