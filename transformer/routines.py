@@ -88,22 +88,26 @@ class AccessionRoutine(Routine):
         information.
         """
         package_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-        first_sibling = self.first_sibling({"aurora_accession": package_data["accession"]})
+        ursa_major_accession = package_data["accession"]
+        first_sibling = self.first_sibling({"aurora_accession": ursa_major_accession})
         if first_sibling:
             archivesspace_accession_uri = first_sibling.archivesspace_accession
             archivesspace_resource_uri = first_sibling.archivesspace_resource
+            aurora_accession = first_sibling.aurora_accession
         else:
-            data = self.ursa_major_client.retrieve(package_data["accession"]).get("data")
+            data = self.ursa_major_client.retrieve(ursa_major_accession).get("data")
+            aurora_accession = data["url"]
             archivesspace_resource_uri = data["resource"]
             data["accession_number"] = self.aspace_client.next_accession_number()
             data["linked_agents"] = self.get_linked_agents(
                 data["creators"] + [{"name": data["organization"], "type": "organization"}])
             transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToArchivesSpaceAccession)
             archivesspace_accession_uri = self.aspace_client.create(transformed, "accession").get("uri")
-        package.aurora_accession = package_data["accession"]
-        package.aurora_transfer = package_data["url"]
+        package.aurora_accession = aurora_accession
+        package.aurora_transfer = package_data["data"]["url"]
         package.archivesspace_accession = archivesspace_accession_uri
         package.archivesspace_resource = archivesspace_resource_uri
+        package.ursa_major_accession = ursa_major_accession
 
 
 class GroupingComponentRoutine(Routine):
@@ -124,7 +128,7 @@ class GroupingComponentRoutine(Routine):
         if first_sibling:
             archivesspace_group_uri = first_sibling.archivesspace_group
         else:
-            data = self.ursa_major_client.retrieve(package.aurora_accession).get("data")
+            data = self.ursa_major_client.retrieve(package.ursa_major_accession).get("data")
             data["level"] = "recordgrp"
             data["linked_agents"] = self.get_linked_agents(
                 data["creators"] + [{"name": data["organization"], "type": "organization"}])

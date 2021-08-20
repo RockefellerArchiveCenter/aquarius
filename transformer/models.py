@@ -27,6 +27,7 @@ class Package(BasePackage):
     archivesspace_resource = models.CharField(max_length=256, blank=True, null=True)
     archivesspace_group = models.CharField(max_length=256, blank=True, null=True)
     archivesspace_transfer = models.CharField(max_length=256, blank=True, null=True)
+    ursa_major_accession = models.CharField(max_length=256, blank=True, null=True)
 
     def __str__(self):
         return '{} {}'.format(self.type, self.bag_identifier)
