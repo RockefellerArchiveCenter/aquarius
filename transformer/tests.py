@@ -17,12 +17,12 @@ from .routines import (AccessionRoutine, AccessionUpdateRequester,
 class ViewTestCase(TestCase):
 
     VIEW_MAP = (
-        ('transformer.routines.AccessionRoutine.run', 'accessions'),
-        ('transformer.routines.GroupingComponentRoutine.run', 'grouping-components'),
-        ('transformer.routines.TransferComponentRoutine.run', 'transfer-components'),
-        ('transformer.routines.DigitalObjectRoutine.run', 'digital-objects'),
-        ('transformer.routines.TransferUpdateRequester.run', 'send-update'),
-        ('transformer.routines.AccessionUpdateRequester.run', 'send-accession-update'),
+        ("transformer.routines.AccessionRoutine.run", "accessions"),
+        ("transformer.routines.GroupingComponentRoutine.run", "grouping-components"),
+        ("transformer.routines.TransferComponentRoutine.run", "transfer-components"),
+        ("transformer.routines.DigitalObjectRoutine.run", "digital-objects"),
+        ("transformer.routines.TransferUpdateRequester.run", "send-update"),
+        ("transformer.routines.AccessionUpdateRequester.run", "send-accession-update"),
     )
 
     @patch("transformer.routines.Routine.__init__")
@@ -35,34 +35,34 @@ class ViewTestCase(TestCase):
                 mocked_fn.return_value = "foo", []
                 response = self.client.post(reverse(view_str))
                 self.assertEqual(response.status_code, 200)
-                self.assertEqual(response.json(), {'detail': 'foo', 'objects': [], 'count': 0})
+                self.assertEqual(response.json(), {"detail": "foo", "objects": [], "count": 0})
                 mocked_fn.assert_called_once()
 
     def test_schema(self):
-        schema = self.client.get(reverse('schema'))
+        schema = self.client.get(reverse("schema"))
         self.assertEqual(schema.status_code, 200, "Wrong HTTP code")
 
     def test_health_check(self):
-        status = self.client.get(reverse('api_health_ping'))
+        status = self.client.get(reverse("api_health_ping"))
         self.assertEqual(status.status_code, 200, "Wrong HTTP code")
 
     def test_create_transfers(self):
-        for file in sorted(listdir(join(settings.BASE_DIR, 'fixtures', 'data'))):
-            with open(join(settings.BASE_DIR, 'fixtures', 'data', file), 'r') as json_file:
+        for file in sorted(listdir(join(settings.BASE_DIR, "transformer", "fixtures", "package_data"))):
+            with open(join(settings.BASE_DIR, "transformer", "fixtures", "package_data", file), "r") as json_file:
                 data = json.load(json_file)
-                response = self.client.post(reverse('package-list'), data, format='json')
+                response = self.client.post(reverse("package-list"), data, format="json")
                 self.assertEqual(response.status_code, 200, "Request threw exception: {}".format(response.data))
-                new_obj = Package.objects.get(fedora_uri=data.get('uri'))
-                process_status = Package.SAVED if new_obj.origin == 'aurora' else Package.TRANSFER_COMPONENT_CREATED
+                new_obj = Package.objects.get(fedora_uri=data.get("uri"))
+                process_status = Package.SAVED if new_obj.origin == "aurora" else Package.TRANSFER_COMPONENT_CREATED
                 self.assertEqual(int(new_obj.process_status), process_status, "Package was created with the incorrect process status.")
-                if new_obj.origin in ['digitization', 'legacy_digital']:
+                if new_obj.origin in ["digitization", "legacy_digital"]:
                     self.assertEqual(
-                        new_obj.archivesspace_transfer, data.get('archivesspace_uri'),
+                        new_obj.archivesspace_transfer, data.get("archivesspace_uri"),
                         "ArchivesSpace Identifier was not created correctly")
 
     def test_search_objects(self):
         updated_time = int(time.time()) - (24 * 3600)
-        response = self.client.get(reverse('package-list'), {'updated_since': updated_time})
+        response = self.client.get(reverse("package-list"), {"updated_since": updated_time})
         self.assertEqual(response.status_code, 200, "Wrong HTTP code")
         self.assertTrue(len(response.json()) >= 1, "No search results")
 
