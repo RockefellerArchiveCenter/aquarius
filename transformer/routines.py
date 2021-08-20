@@ -69,6 +69,11 @@ class Routine:
             linked_agents.append({"uri": agent_ref})
         return linked_agents
 
+    def first_sibling(self, filter_args):
+        if Package.objects.filter(**filter_args).exists():
+            return Package.objects.filter(**filter_args).first()
+        return None
+
 
 class AccessionRoutine(Routine):
     """Creates an ArchivesSpace accession."""
@@ -83,7 +88,7 @@ class AccessionRoutine(Routine):
         information.
         """
         package_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)
-        first_sibling = self.first_sibling(package_data["accession"])
+        first_sibling = self.first_sibling({"aurora_accession": package_data["accession"]})
         if first_sibling:
             archivesspace_accession_uri = first_sibling.archivesspace_accession
             archivesspace_resource_uri = first_sibling.archivesspace_resource
@@ -100,11 +105,6 @@ class AccessionRoutine(Routine):
         package.archivesspace_accession = archivesspace_accession_uri
         package.archivesspace_resource = archivesspace_resource_uri
 
-    def first_sibling(self, accession_identifier):
-        if Package.objects.filter(aurora_accession=accession_identifier).exists():
-            return Package.objects.filter(aurora_accession=accession_identifier).first()
-        return None
-
 
 class GroupingComponentRoutine(Routine):
     """Creates an ArchivesSpace archival object for a group of transfers."""
@@ -118,7 +118,9 @@ class GroupingComponentRoutine(Routine):
         accession. Other packages are linked to the existing archival object
         information.
         """
-        first_sibling = self.first_sibling(package.aurora_accession)
+        first_sibling = self.first_sibling({
+            "aurora_accession": package.aurora_accession,
+            "archivesspace_group__isnull": False})
         if first_sibling:
             archivesspace_group_uri = first_sibling.archivesspace_group
         else:
@@ -129,11 +131,6 @@ class GroupingComponentRoutine(Routine):
             transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToGroupingComponent)
             archivesspace_group_uri = self.aspace_client.create(transformed, "component").get("uri")
         package.archivesspace_group = archivesspace_group_uri
-
-    def first_sibling(self, accession_identifier):
-        if Package.objects.filter(aurora_accession=accession_identifier, archivesspace_group__isnull=False).exists():
-            return Package.objects.filter(aurora_accession=accession_identifier, archivesspace_group__isnull=False).first()
-        return None
 
 
 class TransferComponentRoutine(Routine):
@@ -147,7 +144,9 @@ class TransferComponentRoutine(Routine):
         """Creates an archival object for the first package in a transfer. Other
         packages in the transfer are linked to existing archival object information.
         """
-        first_sibling = self.first_sibling(package.aurora_accession)
+        first_sibling = self.first_sibling({
+            "aurora_accession": package.aurora_accession,
+            "archivesspace_transfer__isnull": False})
         if first_sibling:
             archivesspace_transfer_uri = first_sibling.archivesspace_transfer
         else:
@@ -159,11 +158,6 @@ class TransferComponentRoutine(Routine):
             transformed = self.get_transformed_object(data, SourceTransfer, SourceTransferToTransferComponent)
             archivesspace_transfer_uri = self.aspace_client.create(transformed, "component").get("uri")
         package.archivesspace_transfer = archivesspace_transfer_uri
-
-    def first_sibling(self, accession_identifier):
-        if Package.objects.filter(aurora_accession=accession_identifier, archivesspace_transfer__isnull=False).exists():
-            return Package.objects.filter(aurora_accession=accession_identifier, archivesspace_transfer__isnull=False).first()
-        return None
 
 
 class DigitalObjectRoutine(Routine):
