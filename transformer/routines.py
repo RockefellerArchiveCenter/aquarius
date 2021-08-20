@@ -56,10 +56,12 @@ class Routine:
         raise NotImplementedError("You must implement a `transform_object` method")
 
     def get_transformed_object(self, data, from_resource, mapping):
+        """Transforms data into the target object."""
         from_obj = json_codec.loads(json.dumps(data), resource=from_resource)
         return json.loads(json_codec.dumps(mapping.apply(from_obj)))
 
     def get_linked_agents(self, agents):
+        """Transforms and creates ArchivesSpace agents."""
         linked_agents = []
         for agent in agents:
             agent_data = map_agents(SourceCreator(type=agent["type"], name=agent["name"]))
@@ -69,9 +71,10 @@ class Routine:
             linked_agents.append({"uri": agent_ref})
         return linked_agents
 
-    def first_sibling(self, filter_args):
-        if Package.objects.filter(**filter_args).exists():
-            return Package.objects.filter(**filter_args).first()
+    def first_sibling(self, filter_kwargs):
+        """Returns the first Package object which matches filters passed, if it exists."""
+        if Package.objects.filter(**filter_kwargs).exists():
+            return Package.objects.filter(**filter_kwargs).first()
         return None
 
 
