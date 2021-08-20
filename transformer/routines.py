@@ -46,7 +46,7 @@ class Routine:
             except Exception as e:
                 raise Exception("{} error: {}".format(self.object_type, e), package.bag_identifier)
         message = ("{} created.".format(self.object_type) if len(package_ids)
-                   else "No {}s to process.".format(self.object_type))
+                   else "No {}s to process.".format(self.object_type.lower()))
         return (message, package_ids)
 
     def transform_object(self, package):
