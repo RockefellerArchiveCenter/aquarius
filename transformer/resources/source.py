@@ -20,7 +20,7 @@ class SourceRightsStatementAct(odin.Resource):
     grant_restriction = odin.StringField()
     start_date = odin.DateField(null=True)
     end_date = odin.DateField(null=True)
-    note = odin.StringField(null=True)
+    granted_note = odin.StringField(null=True)
 
 
 class SourceRightsStatement(odin.Resource):
@@ -78,7 +78,7 @@ class SourceTransfer(odin.Resource):
     url = odin.StringField()
     rights_statements = odin.ArrayOf(SourceRightsStatement)
     resource = odin.StringField()
-    archivesspace_parent_identifier = odin.StringField(null=True)
+    parent = odin.StringField(null=True)
     linked_agents = odin.ArrayOf(SourceLinkedCreator, null=True)
     level = odin.StringField()
 
