@@ -124,7 +124,7 @@ class SourceRightsStatementActToArchivesSpaceRightsStatementAct(odin.Mapping):
         ("end_date", None, "end_date"),
     )
 
-    @odin.map_field(from_field="note", to_field="notes", to_list=True)
+    @odin.map_field(from_field="granted_note", to_field="notes", to_list=True)
     def notes(self, value):
         return [ArchivesSpaceNote(
             jsonmodel_type="note_rights_statement_act",
@@ -302,7 +302,7 @@ class SourceTransferToTransferComponent(odin.Mapping):
             data.append(map_note_multipart(value.internal_sender_description, "scopecontent"))
         return data
 
-    @odin.map_field(from_field="archivesspace_parent_identifier", to_field="parent")
+    @odin.map_field(from_field="parent", to_field="parent")
     def parent(self, value):
         if value:
             return ArchivesSpaceRef(ref=value)

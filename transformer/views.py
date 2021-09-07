@@ -8,7 +8,7 @@ from .models import Package
 from .routines import (AccessionRoutine, AccessionUpdateRequester,
                        DigitalObjectRoutine, GroupingComponentRoutine,
                        TransferComponentRoutine, TransferUpdateRequester)
-from .serializers import PackageListSerializer, PackageSerializer
+from .serializers import PackageSerializer
 
 
 class PackageViewSet(ModelViewSet):
@@ -39,12 +39,7 @@ class PackageViewSet(ModelViewSet):
                 process_status=Package.SAVED
             )
             if request.data.get('origin') in ['digitization', 'legacy_digital']:
-                # TODO: investigate using defaultdict for this
-                source_object.data = {
-                    'data': {
-                        'archivesspace_identifier': request.data['archivesspace_uri']
-                    }
-                }
+                source_object.archivesspace_transfer = request.data['archivesspace_uri']
                 source_object.process_status = Package.TRANSFER_COMPONENT_CREATED
                 source_object.origin = request.data.get('origin')
                 source_object.save()
@@ -58,11 +53,6 @@ class PackageViewSet(ModelViewSet):
         if updated_since != "":
             queryset = queryset.filter(last_modified__gte=datetime.fromtimestamp(int(updated_since)))
         return queryset
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return PackageListSerializer
-        return PackageSerializer
 
 
 class ProcessAccessionsView(RoutineView):

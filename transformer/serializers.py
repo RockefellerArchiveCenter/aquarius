@@ -7,13 +7,6 @@ class PackageSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Package
-        fields = ('url', 'fedora_uri', 'bag_identifier', 'type',
-                  'process_status', 'data', 'accession_data', 'created',
-                  'last_modified')
-
-
-class PackageListSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Package
-        exclude = ('accession_data', 'data')
+        fields = ('url', 'bag_identifier', 'type', 'origin', 'process_status',
+                  'aurora_accession', 'aurora_transfer', 'archivesspace_accession',
+                  'archivesspace_group', 'archivesspace_transfer', 'ursa_major_accession')
