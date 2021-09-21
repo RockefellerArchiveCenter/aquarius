@@ -3,13 +3,16 @@ cache: pip
 services:
   - docker
 env:
-  CONTAINER: aquarius-web
+  global:
+    CONTAINER: aquarius-web
+    APPLICATION_NAME: aquarius
+    DJANGO_PORT: 8002
 before_install:
-  - cp aquarius/config.py.example aquarius/config.py
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - cp ${APPLICATION_NAME}/config.py.example ${APPLICATION_NAME}/config.py
+  - echo "${DOCKER_PASSWORD}" | docker login -u "{$DOCKER_USERNAME}" --password-stdin
   - docker-compose up -d
 install:
-  - ./wait-for-it.sh web:8000 -- docker-compose exec $CONTAINER pip install coverage pre-commit
+  - ./wait-for-it.sh $CONTAINER:$DJANGO_PORT -- docker-compose exec $CONTAINER pip install coverage pre-commit
   - docker-compose exec $CONTAINER pre-commit install
 script:
   - docker-compose exec $CONTAINER pre-commit run --all-files --show-diff-on-failure
