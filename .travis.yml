@@ -9,7 +9,7 @@ env:
     DJANGO_PORT: 8002
 before_install:
   - cp ${APPLICATION_NAME}/config.py.example ${APPLICATION_NAME}/config.py
-  - echo "${DOCKER_PASSWORD}" | docker login -u "{$DOCKER_USERNAME}" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker-compose up -d
 install:
   - ./wait-for-it.sh $CONTAINER:$DJANGO_PORT -- docker-compose exec $CONTAINER pip install coverage pre-commit
