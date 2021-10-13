@@ -74,6 +74,16 @@ class Routine:
             return Package.objects.filter(**filter_kwargs).first()
         return None
 
+    def handle_open_dates(self, rights_statements):
+        """Converts `open` dates to null dates"""
+        for rights_statement in rights_statements:
+            if str(rights_statement.get("end_date")).lower() == "open":
+                rights_statement["end_date"] = None
+            for granted in rights_statement.get("rights_granted"):
+                if granted.get("end_date") == "open":
+                    granted["end_date"] = None
+        return rights_statements
+
 
 class AccessionRoutine(Routine):
     """Creates an ArchivesSpace accession."""
@@ -101,6 +111,7 @@ class AccessionRoutine(Routine):
             data["accession_number"] = self.aspace_client.next_accession_number()
             data["linked_agents"] = self.get_linked_agents(
                 data["creators"] + [{"name": data["organization"], "type": "organization"}])
+            data["rights_statements"] = self.handle_open_dates(data.get("rights_statements", []))
             transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToArchivesSpaceAccession)
             archivesspace_accession_uri = self.aspace_client.create(transformed, "accession").get("uri")
         package.aurora_accession = aurora_accession
@@ -132,6 +143,7 @@ class GroupingComponentRoutine(Routine):
             data["level"] = "recordgrp"
             data["linked_agents"] = self.get_linked_agents(
                 data["creators"] + [{"name": data["organization"], "type": "organization"}])
+            data["rights_statements"] = self.handle_open_dates(data.get("rights_statements", []))
             transformed = self.get_transformed_object(data, SourceAccession, SourceAccessionToGroupingComponent)
             archivesspace_group_uri = self.aspace_client.create(transformed, "component").get("uri")
         package.archivesspace_group = archivesspace_group_uri
@@ -160,6 +172,7 @@ class TransferComponentRoutine(Routine):
             data["level"] = "file"
             data["linked_agents"] = self.get_linked_agents(
                 data["metadata"]["record_creators"] + [{"name": data["metadata"]["source_organization"], "type": "organization"}])
+            data["rights_statements"] = self.handle_open_dates(data.get("rights_statements", []))
             transformed = self.get_transformed_object(data, SourceTransfer, SourceTransferToTransferComponent)
             archivesspace_transfer_uri = self.aspace_client.create(transformed, "component").get("uri")
         package.archivesspace_transfer = archivesspace_transfer_uri
