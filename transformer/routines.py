@@ -36,18 +36,19 @@ class Routine:
         self.start_time = int(time.time())
 
     def run(self):
-        package_ids = []
-        for package in Package.objects.filter(process_status=self.start_status):
+        """Main method. Processes only one package at a time."""
+        package = Package.objects.filter(process_status=self.start_status).first()
+        if package:
             try:
                 self.transform_object(package)
                 package.process_status = self.end_status
                 package.save()
-                package_ids.append(package.bag_identifier)
+                message = f"{self.object_type} created."
             except Exception as e:
-                raise Exception("{} error: {}".format(self.object_type, e), package.bag_identifier)
-        message = ("{} created.".format(self.object_type) if len(package_ids)
-                   else "No {}s to process.".format(self.object_type.lower()))
-        return (message, package_ids)
+                raise Exception(f"{self.object_type} error: {e}", package.bag_identifier)
+        else:
+            message = f"No {self.object_type.lower()}s to process."
+        return (message, [package.bag_identifier] if package else None)
 
     def transform_object(self, package):
         raise NotImplementedError("You must implement a `transform_object` method")
