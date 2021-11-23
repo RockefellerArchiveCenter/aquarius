@@ -1,5 +1,4 @@
 DJANGO_DEBUG = True  # run Django in debug mode, which outputs stack traces to the UI, set to False for production (boolean)
-DJANGO_PORT = 8007  # the port on which the Django development server will run (integer)
 DJANGO_SECRET_KEY = "sx6mf&q*eifhk^(cx197+=*cuq0guy$43!+hy#g1l4orkklx$g"  # used by Django to create hashes (string)
 DJANGO_ALLOWED_HOSTS = ["localhost", "aquarius-web"]  # hosts Argo will respond to (list of strings)
 
