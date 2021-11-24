@@ -10,24 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+from pathlib import Path
 
-import aquarius.config as CF
+from . import config
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9d*g(#ya!0ho+l+ela_y0$zs@k)h1f0#p*bi9520l0h$u)7go0'
+SECRET_KEY = config.DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = CF.DEBUG
+DEBUG = config.DJANGO_DEBUG
 
-ALLOWED_HOSTS = CF.ALLOWED_HOSTS
+ALLOWED_HOSTS = config.DJANGO_ALLOWED_HOSTS
 
 # Application definition
 
@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'transformer',
     'rest_framework',
     'health_check',
-    'transformer',
     'asterism',
 ]
 
@@ -59,7 +59,7 @@ ROOT_URLCONF = 'aquarius.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, os.path.join(BASE_DIR, 'transformer', 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,7 +78,16 @@ WSGI_APPLICATION = 'aquarius.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = CF.DATABASES
+DATABASES = {
+    "default": {
+        "ENGINE": config.SQL_ENGINE,
+        "NAME": config.SQL_DATABASE,
+        "USER": config.SQL_USER,
+        "PASSWORD": config.SQL_PASSWORD,
+        "HOST": config.SQL_HOST,
+        "PORT": config.SQL_PORT,
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -117,13 +126,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = CF.STATIC_ROOT
+STATIC_ROOT = str(Path(BASE_DIR, 'static'))
 
+ARCHIVESSPACE = {
+    "baseurl": config.ARCHIVESSPACE_BASEURL,
+    "username": config.ARCHIVESSPACE_USER,
+    "password": config.ARCHIVESSPACE_PASSWORD,
+    "repo_id": config.ARCHIVESSPACE_REPOSITORY,
+}
 
-ARCHIVESSPACE = CF.ARCHIVESSPACE
-URSA_MAJOR = CF.URSA_MAJOR
-AURORA = CF.AURORA
+URSA_MAJOR = {
+    "baseurl": config.URSA_MAJOR_BASEURL,
+}
 
+AURORA = {
+    "baseurl": config.AURORA_BASEURL,
+    "username": config.AURORA_USER,
+    "password": config.AURORA_PASSWORD
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
