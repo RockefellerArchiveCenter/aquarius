@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'transformer',
     'rest_framework',
     'health_check',
-    'transformer',
     'asterism',
 ]
 
