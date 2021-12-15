@@ -1,6 +1,6 @@
 ArchivesSnake==0.9.1
 asterism==0.7.4
-Django==3.2.9
+Django==3.2.10
 djangorestframework==3.12.4
 ElectronBonder==1.0
 health-check==3.4.1
