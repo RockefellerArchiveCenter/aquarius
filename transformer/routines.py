@@ -1,8 +1,9 @@
 import json
 import time
 
-from aquarius import settings
 from odin.codecs import json_codec
+
+from aquarius import settings
 
 from .clients import ArchivesSpaceClient, AuroraClient, UrsaMajorClient
 from .mappings import (SourceAccessionToArchivesSpaceAccession,
