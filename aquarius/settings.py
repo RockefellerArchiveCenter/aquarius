@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'transformer',
     'rest_framework',
-    'health_check',
     'asterism',
 ]
 

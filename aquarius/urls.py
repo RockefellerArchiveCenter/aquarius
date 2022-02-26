@@ -13,11 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from asterism.views import PingView
 from django.contrib import admin
-from django.urls import include
+from django.urls import include, re_path
 from rest_framework import routers
 from rest_framework.schemas import get_schema_view
+
 from transformer.views import (AccessionUpdateRequestView, PackageViewSet,
                                ProcessAccessionsView,
                                ProcessDigitalObjectsView,
@@ -34,14 +35,14 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^accessions/', ProcessAccessionsView.as_view(), name="accessions"),
-    url(r'^grouping-components/', ProcessGroupingComponentsView.as_view(), name="grouping-components"),
-    url(r'^transfer-components/', ProcessTransferComponentsView.as_view(), name="transfer-components"),
-    url(r'^digital-objects/', ProcessDigitalObjectsView.as_view(), name="digital-objects"),
-    url(r'^send-update/', TransferUpdateRequestView.as_view(), name="send-update"),
-    url(r'^send-accession-update/', AccessionUpdateRequestView.as_view(), name="send-accession-update"),
-    url(r'^status/', include('health_check.api.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^schema/', schema_view, name='schema'),
+    re_path(r'^', include(router.urls)),
+    re_path(r'^accessions/', ProcessAccessionsView.as_view(), name="accessions"),
+    re_path(r'^grouping-components/', ProcessGroupingComponentsView.as_view(), name="grouping-components"),
+    re_path(r'^transfer-components/', ProcessTransferComponentsView.as_view(), name="transfer-components"),
+    re_path(r'^digital-objects/', ProcessDigitalObjectsView.as_view(), name="digital-objects"),
+    re_path(r'^send-update/', TransferUpdateRequestView.as_view(), name="send-update"),
+    re_path(r'^send-accession-update/', AccessionUpdateRequestView.as_view(), name="send-accession-update"),
+    re_path(r'^status/', PingView.as_view(), name='ping'),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^schema/', schema_view, name='schema'),
 ]

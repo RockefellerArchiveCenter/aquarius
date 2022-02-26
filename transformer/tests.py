@@ -4,9 +4,10 @@ from os import listdir
 from os.path import join
 from unittest.mock import patch
 
-from aquarius import settings
 from django.test import TestCase
 from django.urls import reverse
+
+from aquarius import settings
 
 from .models import Package
 from .routines import (AccessionRoutine, AccessionUpdateRequester,
@@ -43,7 +44,7 @@ class ViewTestCase(TestCase):
         self.assertEqual(schema.status_code, 200, "Wrong HTTP code")
 
     def test_health_check(self):
-        status = self.client.get(reverse("api_health_ping"))
+        status = self.client.get(reverse("ping"))
         self.assertEqual(status.status_code, 200, "Wrong HTTP code")
 
     def test_create_transfers(self):
