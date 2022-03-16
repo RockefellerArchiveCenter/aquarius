@@ -1,4 +1,5 @@
 import odin
+
 from aquarius import settings
 
 from . import resource_configs
