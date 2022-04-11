@@ -29,7 +29,7 @@ djangorestframework==3.13.1
     # via
     #   -r requirements.in
     #   asterism
-electronbonder==1.0
+electronbonder==1.1
     # via -r requirements.in
 idna==3.3
     # via requests
