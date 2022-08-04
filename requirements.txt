@@ -10,7 +10,7 @@ asgiref==3.5.2
     # via django
 asterism==0.9.0
     # via -r requirements.in
-attrs==21.4.0
+attrs==22.1.0
     # via archivessnake
 bagit==1.8.1
     # via asterism
@@ -37,7 +37,7 @@ iso-639==0.4.5
     # via -r requirements.in
 iso8601==1.0.2
     # via -r requirements.in
-jarowinkler==1.1.2
+jarowinkler==1.2.0
     # via rapidfuzz
 more-itertools==8.13.0
     # via archivessnake
@@ -55,7 +55,7 @@ pyyaml==6.0
     # via
     #   -r requirements.in
     #   archivessnake
-rapidfuzz==2.1.3
+rapidfuzz==2.4.2
     # via archivessnake
 requests==2.28.1
     # via
@@ -67,9 +67,9 @@ six==1.16.0
     #   odin
 sqlparse==0.4.2
     # via django
-structlog==21.5.0
+structlog==22.1.0
     # via archivessnake
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==1.26.10
+urllib3==1.26.11
     # via requests
