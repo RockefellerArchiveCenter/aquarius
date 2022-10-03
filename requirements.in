@@ -1,11 +1,11 @@
 ArchivesSnake~=0.9
-asterism~=0.8
-Django~=4.0.7
-djangorestframework~=3.13
+asterism~=0.9
+Django~=4.1.1
+djangorestframework~=3.14
 ElectronBonder~=2.1
 iso-639~=0.4
 iso8601~=1.0
-odin~=1.7
+odin~=1.8
 psycopg2-binary~=2.9
 PyYAML~=6.0
 uritemplate~=4.1
