@@ -156,7 +156,7 @@ class RoutinesTestCase(TestCase):
         self.assertEqual(len(obj_list), 1)
         self.assertEqual(as_create_object.call_count, 1)
 
-    @patch("transformer.clients.ElectronBond.authorize")
+    @patch("transformer.clients.ElectronBond.authorize_oauth")
     @patch("transformer.clients.ElectronBond.patch")
     def test_transfer_update(self, mock_patch, mock_auth):
         mock_auth.return_value = True
@@ -165,7 +165,7 @@ class RoutinesTestCase(TestCase):
         self.assertEqual(msg, "Update requests sent.")
         self.assertEqual(len(obj_list), 4)
 
-    @patch("transformer.clients.ElectronBond.authorize")
+    @patch("transformer.clients.ElectronBond.authorize_oauth")
     @patch("transformer.clients.ElectronBond.patch")
     def test_accession_update(self, mock_patch, mock_auth):
         mock_auth.return_value = True
