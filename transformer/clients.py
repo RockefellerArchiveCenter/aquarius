@@ -143,9 +143,13 @@ class UrsaMajorClient(object):
 class AuroraClient:
     """Client to update data in Aurora."""
 
-    def __init__(self, baseurl, username, password):
-        self.client = ElectronBond(baseurl=baseurl, username=username, password=password)
-        if not self.client.authorize():
+    def __init__(self, baseurl, oauth_client_baseurl, oauth_client_id, oauth_client_secret):
+        self.client = ElectronBond(
+            baseurl=baseurl, 
+            oauth_client_baseurl=oauth_client_baseurl,
+            oauth_client_id=oauth_client_id,
+            oauth_client_secret=oauth_client_secret)
+        if not self.client.authorize_oauth():
             raise AuroraClientError("Could not authorize {} in Aurora".format(username))
 
     def update(self, raw_url, data, **kwargs):
