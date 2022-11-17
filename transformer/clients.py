@@ -145,12 +145,12 @@ class AuroraClient:
 
     def __init__(self, baseurl, oauth_client_baseurl, oauth_client_id, oauth_client_secret):
         self.client = ElectronBond(
-            baseurl=baseurl, 
+            baseurl=baseurl,
             oauth_client_baseurl=oauth_client_baseurl,
             oauth_client_id=oauth_client_id,
             oauth_client_secret=oauth_client_secret)
         if not self.client.authorize_oauth():
-            raise AuroraClientError("Could not authorize {} in Aurora".format(username))
+            raise AuroraClientError("Could not authorize Client ID {} in Aurora".format(oauth_client_id))
 
     def update(self, raw_url, data, **kwargs):
         """Sends a PATCH request.
