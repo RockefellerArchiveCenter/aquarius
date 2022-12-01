@@ -70,9 +70,9 @@ six==1.16.0
     #   odin
 sqlparse==0.4.3
     # via django
-structlog==22.1.0
+structlog==22.3.0
     # via archivessnake
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==1.26.12
+urllib3==1.26.13
     # via requests
