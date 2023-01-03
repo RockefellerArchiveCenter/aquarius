@@ -140,8 +140,9 @@ URSA_MAJOR = {
 
 AURORA = {
     "baseurl": config.AURORA_BASEURL,
-    "username": config.AURORA_USER,
-    "password": config.AURORA_PASSWORD
+    "oauth_client_baseurl": config.OAUTH_CLIENT_BASEURL,
+    "oauth_client_id": config.OAUTH_CLIENT_ID,
+    "oauth_client_secret": config.OAUTH_CLIENT_SECRET
 }
 
 REST_FRAMEWORK = {
