@@ -14,7 +14,7 @@ attrs==22.2.0
     # via archivessnake
 bagit==1.8.1
     # via asterism
-boltons==21.0.0
+boltons==23.0.0
     # via archivessnake
 certifi==2022.12.7
     # via requests
@@ -37,7 +37,7 @@ iso-639==0.4.5
     # via -r requirements.in
 iso8601==1.1.0
     # via -r requirements.in
-more-itertools==9.0.0
+more-itertools==9.1.0
     # via archivessnake
 oauthlib==3.2.2
     # via requests-oauthlib
