@@ -315,14 +315,14 @@ class SourcePackageToDigitalObject(odin.Mapping):
     def extract_id(self, uri):
         return uri.split("/")[-1]
 
-    @odin.map_field(from_field="fedora_uri", to_field="title")
+    @odin.map_field(from_field="storage_uri", to_field="title")
     def title(self, value):
         return self.extract_id(value)
 
-    @odin.map_field(from_field="fedora_uri", to_field="digital_object_id")
+    @odin.map_field(from_field="storage_uri", to_field="digital_object_id")
     def digital_object_id(self, value):
         return self.extract_id(value)
 
-    @odin.map_field(from_field=("fedora_uri", "use_statement"), to_field="file_versions", to_list=True)
-    def file_versions(self, fedora_uri, use_statement):
-        return [ArchivesSpaceFileVersion(file_uri=fedora_uri, use_statement=use_statement)]
+    @odin.map_field(from_field=("storage_uri", "use_statement"), to_field="file_versions", to_list=True)
+    def file_versions(self, storage_uri, use_statement):
+        return [ArchivesSpaceFileVersion(file_uri=storage_uri, use_statement=use_statement)]

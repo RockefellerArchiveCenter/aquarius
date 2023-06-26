@@ -4,7 +4,7 @@ from django.db import models
 
 class Package(BasePackage):
     BasePackage._meta.get_field("bag_identifier")._unique = False
-    fedora_uri = models.CharField(max_length=512)
+    storage_uri = models.CharField(max_length=512)
     SAVED = 10
     ACCESSION_CREATED = 20
     GROUPING_COMPONENT_CREATED = 30
