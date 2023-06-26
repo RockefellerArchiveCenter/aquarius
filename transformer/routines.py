@@ -202,7 +202,7 @@ class DigitalObjectRoutine(Routine):
         archival object's instances array.
         """
         transfer_component = self.aspace_client.retrieve(package.archivesspace_transfer)
-        if not len(transfer_component.get("rights_statements")) and package.origin in ["digitization", "legacy_digital"]:
+        if not len(transfer_component.get("rights_statements")) and package.origin in ["digitization", "legacy_digital", "av_digitization"]:
             rights_data = self.ursa_major_client.find_bag_by_id(package.bag_identifier)["data"].get("rights_statements", [])
             transformed_rights = self.get_transformed_object(
                 self.handle_open_dates(rights_data), SourceRightsStatement, SourceRightsStatementToArchivesSpaceRightsStatement)

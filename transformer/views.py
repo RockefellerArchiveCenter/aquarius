@@ -38,7 +38,7 @@ class PackageViewSet(ModelViewSet):
                 type=request.data.get('package_type'),
                 process_status=Package.SAVED
             )
-            if request.data.get('origin') in ['digitization', 'legacy_digital']:
+            if request.data.get('origin') in ['digitization', 'legacy_digital', 'av_digitization']:
                 source_object.archivesspace_transfer = request.data['archivesspace_uri']
                 source_object.process_status = Package.TRANSFER_COMPONENT_CREATED
                 source_object.origin = request.data.get('origin')
