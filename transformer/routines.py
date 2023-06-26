@@ -189,7 +189,7 @@ class DigitalObjectRoutine(Routine):
 
     def transform_object(self, package):
         """Creates a digital object for each package."""
-        data = {"fedora_uri": package.fedora_uri, "use_statement": package.use_statement}
+        data = {"storage_uri": package.storage_uri, "use_statement": package.use_statement}
         transformed = self.get_transformed_object(data, SourcePackage, SourcePackageToDigitalObject)
         do_uri = self.aspace_client.create(transformed, "digital object").get("uri")
         self.update_archival_object(package, do_uri)

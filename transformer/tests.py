@@ -53,7 +53,7 @@ class ViewTestCase(TestCase):
                 data = json.load(json_file)
                 response = self.client.post(reverse("package-list"), data, format="json")
                 self.assertEqual(response.status_code, 200, "Request threw exception: {}".format(response.data))
-                new_obj = Package.objects.get(fedora_uri=data.get("uri"))
+                new_obj = Package.objects.get(storage_uri=data.get("uri"))
                 process_status = Package.SAVED if new_obj.origin == "aurora" else Package.TRANSFER_COMPONENT_CREATED
                 self.assertEqual(int(new_obj.process_status), process_status, "Package was created with the incorrect process status.")
                 if new_obj.origin in ["digitization", "legacy_digital"]:

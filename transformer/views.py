@@ -33,7 +33,7 @@ class PackageViewSet(ModelViewSet):
         `process_status` to TRANSFER_COMPONENT_CREATED."""
         try:
             source_object = Package.objects.create(
-                fedora_uri=request.data.get('uri'),
+                storage_uri=request.data.get('uri'),
                 bag_identifier=request.data.get('identifier'),
                 type=request.data.get('package_type'),
                 process_status=Package.SAVED
