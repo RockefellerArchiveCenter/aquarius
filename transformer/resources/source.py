@@ -84,5 +84,5 @@ class SourceTransfer(odin.Resource):
 
 
 class SourcePackage(odin.Resource):
-    fedora_uri = odin.StringField()
+    storage_uri = odin.StringField()
     use_statement = odin.StringField()
