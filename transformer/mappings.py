@@ -313,7 +313,7 @@ class SourcePackageToDigitalObject(odin.Mapping):
     to_obj = ArchivesSpaceDigitalObject
 
     def extract_id(self, uri):
-        return uri.split("/")[-1]
+        return uri.rstrip("/").split("/")[-1]
 
     @odin.map_field(from_field="storage_uri", to_field="title")
     def title(self, value):
