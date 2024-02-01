@@ -20,7 +20,7 @@ certifi==2023.11.17
     # via requests
 charset-normalizer==3.3.2
     # via requests
-django==4.2.8
+django==4.2.9
     # via
     #   -r requirements.in
     #   asterism
@@ -37,7 +37,7 @@ iso-639==0.4.5
     # via -r requirements.in
 iso8601==1.1.0
     # via -r requirements.in
-more-itertools==10.1.0
+more-itertools==10.2.0
     # via archivessnake
 oauthlib==3.2.2
     # via requests-oauthlib
@@ -45,7 +45,7 @@ odin==1.8.1
     # via -r requirements.in
 psycopg2==2.9.9
     # via -r requirements.in
-pytz==2023.3.post1
+pytz==2023.4
     # via djangorestframework
 pyyaml==6.0.1
     # via
@@ -66,11 +66,11 @@ six==1.16.0
     #   odin
 sqlparse==0.4.4
     # via django
-structlog==23.3.0
+structlog==24.1.0
     # via archivessnake
 typing-extensions==4.9.0
     # via asgiref
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==2.1.0
+urllib3==2.2.0
     # via requests
