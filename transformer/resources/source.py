@@ -40,8 +40,8 @@ class SourceRightsStatement(odin.Resource):
 
 
 class SourceMetadata(odin.Resource):
-    date_end = odin.DateTimeField()
-    date_start = odin.DateTimeField()
+    date_end = odin.DateField()
+    date_start = odin.DateField()
     internal_sender_description = odin.StringField()
     language = odin.ArrayField()
     payload_oxum = odin.StringField()
