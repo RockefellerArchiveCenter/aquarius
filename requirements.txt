@@ -6,7 +6,7 @@
 #
 archivessnake==0.9.1
     # via -r requirements.in
-asgiref==3.7.2
+asgiref==3.8.0
     # via django
 asterism==1.1.0
     # via -r requirements.in
@@ -16,16 +16,16 @@ bagit==1.8.1
     # via asterism
 boltons==23.1.1
     # via archivessnake
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-django==4.2.9
+django==4.2.11
     # via
     #   -r requirements.in
     #   asterism
     #   djangorestframework
-djangorestframework==3.14.0
+djangorestframework==3.15.0
     # via
     #   -r requirements.in
     #   asterism
@@ -45,20 +45,18 @@ odin==1.8.1
     # via -r requirements.in
 psycopg2==2.9.9
     # via -r requirements.in
-pytz==2023.4
-    # via djangorestframework
 pyyaml==6.0.1
     # via
     #   -r requirements.in
     #   archivessnake
-rapidfuzz==3.6.1
+rapidfuzz==3.6.2
     # via archivessnake
 requests==2.31.0
     # via
     #   archivessnake
     #   electronbonder
     #   requests-oauthlib
-requests-oauthlib==1.3.1
+requests-oauthlib==1.4.0
     # via electronbonder
 six==1.16.0
     # via
@@ -68,9 +66,9 @@ sqlparse==0.4.4
     # via django
 structlog==24.1.0
     # via archivessnake
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via asgiref
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==2.2.0
+urllib3==2.2.1
     # via requests
