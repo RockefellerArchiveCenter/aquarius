@@ -39,10 +39,6 @@ class ViewTestCase(TestCase):
                 self.assertEqual(response.json(), {"detail": "foo", "objects": [], "count": 0})
                 mocked_fn.assert_called_once()
 
-    def test_schema(self):
-        schema = self.client.get(reverse("schema"))
-        self.assertEqual(schema.status_code, 200, "Wrong HTTP code")
-
     def test_health_check(self):
         status = self.client.get(reverse("ping"))
         self.assertEqual(status.status_code, 200, "Wrong HTTP code")

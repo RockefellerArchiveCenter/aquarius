@@ -59,8 +59,6 @@ aquarius has seven services, all of which are exposed via HTTP endpoints (see [R
 |POST|/send-update| |200|Sends updated transfer data to Aurora|
 |POST|/send-accession-update| |200|Sends updated accession data to Aurora|
 |GET|/status||200|Return the status of the microservice|
-|GET|/schema.json||200|Returns the OpenAPI schema for this application|
-
 
 ### ArchivesSpace configuration
 
