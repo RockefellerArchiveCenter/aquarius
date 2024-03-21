@@ -17,7 +17,6 @@ from asterism.views import PingView
 from django.contrib import admin
 from django.urls import include, re_path
 from rest_framework import routers
-from rest_framework.schemas import get_schema_view
 
 from transformer.views import (AccessionUpdateRequestView, PackageViewSet,
                                ProcessAccessionsView,
@@ -29,11 +28,6 @@ from transformer.views import (AccessionUpdateRequestView, PackageViewSet,
 router = routers.DefaultRouter()
 router.register(r'packages', PackageViewSet, 'package')
 
-schema_view = get_schema_view(
-    title="Aquarius API",
-    description="Endpoints for Aquarius microservice application."
-)
-
 urlpatterns = [
     re_path(r'^', include(router.urls)),
     re_path(r'^accessions/', ProcessAccessionsView.as_view(), name="accessions"),
@@ -44,5 +38,4 @@ urlpatterns = [
     re_path(r'^send-accession-update/', AccessionUpdateRequestView.as_view(), name="send-accession-update"),
     re_path(r'^status/', PingView.as_view(), name='ping'),
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'^schema/', schema_view, name='schema'),
 ]
