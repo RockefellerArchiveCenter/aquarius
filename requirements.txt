@@ -31,7 +31,7 @@ djangorestframework==3.15.1
     #   asterism
 electronbonder==2.2
     # via -r requirements.in
-idna==3.6
+idna==3.7
     # via requests
 iso-639==0.4.5
     # via -r requirements.in
@@ -49,7 +49,7 @@ pyyaml==6.0.1
     # via
     #   -r requirements.in
     #   archivessnake
-rapidfuzz==3.7.0
+rapidfuzz==3.8.1
     # via archivessnake
 requests==2.31.0
     # via
@@ -62,11 +62,11 @@ six==1.16.0
     # via
     #   electronbonder
     #   odin
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 structlog==24.1.0
     # via archivessnake
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via asgiref
 uritemplate==4.1.1
     # via -r requirements.in
