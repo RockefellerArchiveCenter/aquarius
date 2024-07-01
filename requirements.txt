@@ -16,7 +16,7 @@ bagit==1.8.1
     # via asterism
 boltons==24.0.0
     # via archivessnake
-certifi==2024.2.2
+certifi==2024.6.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
@@ -25,7 +25,7 @@ django==4.2.13
     #   -r requirements.in
     #   asterism
     #   djangorestframework
-djangorestframework==3.15.1
+djangorestframework==3.15.2
     # via
     #   -r requirements.in
     #   asterism
@@ -37,7 +37,7 @@ iso-639==0.4.5
     # via -r requirements.in
 iso8601==1.1.0
     # via -r requirements.in
-more-itertools==10.2.0
+more-itertools==10.3.0
     # via archivessnake
 oauthlib==3.2.2
     # via requests-oauthlib
@@ -66,9 +66,9 @@ sqlparse==0.5.0
     # via django
 structlog==24.2.0
     # via archivessnake
-typing-extensions==4.12.0
+typing-extensions==4.12.2
     # via asgiref
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==2.2.1
+urllib3==2.2.2
     # via requests
