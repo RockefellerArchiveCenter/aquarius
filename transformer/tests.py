@@ -151,6 +151,7 @@ class RoutinesTestCase(TestCase):
         self.assertEqual(msg, "Digital object created.")
         self.assertEqual(len(obj_list), 1)
         self.assertEqual(as_create_object.call_count, 1)
+        self.assertEqual(as_object.call_count, 2)
 
     @patch("transformer.clients.ElectronBond.authorize_oauth")
     @patch("transformer.clients.ElectronBond.patch")

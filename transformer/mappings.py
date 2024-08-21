@@ -315,10 +315,6 @@ class SourcePackageToDigitalObject(odin.Mapping):
     def extract_id(self, uri):
         return uri.rstrip("/").split("/")[-1]
 
-    @odin.map_field(from_field="storage_uri", to_field="title")
-    def title(self, value):
-        return self.extract_id(value)
-
     @odin.map_field(from_field="storage_uri", to_field="digital_object_id")
     def digital_object_id(self, value):
         return self.extract_id(value)
