@@ -32,8 +32,11 @@ def map_dates(date_start, date_end):
             date_start.strftime("%Y %B %e"),
             date_end.strftime("%Y %B %e"))
         return [ArchivesSpaceDate(
-            expression=expression, begin=date_start, end=date_end,
-            date_type="inclusive", label="creation")]
+            expression=expression,
+            begin=date_start.strftime("%Y-%m-%d"),
+            end=date_end.strftime("%Y-%m-%d"),
+            date_type="inclusive",
+            label="creation")]
     else:
         expression = date_start.strftime("%Y %B %e")
         return [ArchivesSpaceDate(
