@@ -16,7 +16,7 @@ bagit==1.8.1
     # via asterism
 boltons==25.0.0
     # via archivessnake
-certifi==2025.1.31
+certifi==2025.4.26
     # via requests
 charset-normalizer==3.4.1
     # via requests
@@ -37,7 +37,7 @@ iso-639==0.4.5
     # via -r requirements.in
 iso8601==1.1.0
     # via -r requirements.in
-more-itertools==10.6.0
+more-itertools==10.7.0
     # via archivessnake
 oauthlib==3.2.2
     # via requests-oauthlib
@@ -49,7 +49,7 @@ pyyaml==6.0.2
     # via
     #   -r requirements.in
     #   archivessnake
-rapidfuzz==3.12.2
+rapidfuzz==3.13.0
     # via archivessnake
 requests==2.32.3
     # via
@@ -64,13 +64,13 @@ six==1.17.0
     #   odin
 sqlparse==0.5.3
     # via django
-structlog==25.2.0
+structlog==25.3.0
     # via archivessnake
-typing-extensions==4.13.0
+typing-extensions==4.13.2
     # via
     #   asgiref
     #   structlog
 uritemplate==4.1.1
     # via -r requirements.in
-urllib3==2.3.0
+urllib3==2.4.0
     # via requests
