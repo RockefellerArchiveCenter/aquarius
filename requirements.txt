@@ -12,15 +12,15 @@ asterism==1.1.0
     # via -r requirements.in
 attrs==25.3.0
     # via archivessnake
-bagit==1.8.1
+bagit==1.9.0
     # via asterism
 boltons==25.0.0
     # via archivessnake
-certifi==2025.4.26
+certifi==2025.6.15
     # via requests
 charset-normalizer==3.4.2
     # via requests
-django==4.2.21
+django==4.2.23
     # via
     #   -r requirements.in
     #   asterism
@@ -39,7 +39,7 @@ iso8601==1.1.0
     # via -r requirements.in
 more-itertools==10.7.0
     # via archivessnake
-oauthlib==3.2.2
+oauthlib==3.3.1
     # via requests-oauthlib
 odin==1.8.1
     # via -r requirements.in
@@ -51,7 +51,7 @@ pyyaml==6.0.2
     #   archivessnake
 rapidfuzz==3.13.0
     # via archivessnake
-requests==2.32.3
+requests==2.32.4
     # via
     #   archivessnake
     #   electronbonder
@@ -64,13 +64,13 @@ six==1.17.0
     #   odin
 sqlparse==0.5.3
     # via django
-structlog==25.3.0
+structlog==25.4.0
     # via archivessnake
-typing-extensions==4.13.2
+typing-extensions==4.14.0
     # via
     #   asgiref
     #   structlog
-uritemplate==4.1.1
+uritemplate==4.2.0
     # via -r requirements.in
-urllib3==2.4.0
+urllib3==2.5.0
     # via requests
