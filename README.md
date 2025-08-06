@@ -1,3 +1,5 @@
+**This application has been marked as read-only and is no longer actively maintained or supported. Application functionality has been reimplemented in the [digital_ingest_transformation](https://github.com/RockefellerArchiveCenter/digital_ingest_transformation) application.**
+
 # aquarius
 
 A microservice to transform and deliver Accessions, Archival Objects and Digital Objects to ArchivesSpace.
